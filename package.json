@@ -60,6 +60,12 @@
           "type": "string",
           "default": "█",
           "description": "Change the icon of the cloak for your .env files"
+        },
+        "dotenv.enableMonorepoSupport": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "When enabled, searches for .env files starting from the active file's directory and walking up the tree. When disabled, uses workspace root."
         }
       }
     },
