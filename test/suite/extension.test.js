@@ -1,6 +1,3 @@
-const mocha = require('mocha')
-const describe = mocha.describe
-const it = mocha.it
 const assert = require('assert')
 
 // You can import and use all API from the 'vscode' module
