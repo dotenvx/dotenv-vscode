@@ -6,6 +6,9 @@ const peeking = require('./lib/peeking')
 async function activate (context) {
   console.log('Dotenv is active')
 
+  console.log('Load autocloaking')
+  await autocloaking.run(context)
+
   console.log('Load autocompletion')
   await autocompletion.run(context)
 
@@ -14,9 +17,6 @@ async function activate (context) {
 
   console.log('Load secret peeking')
   peeking.run(context)
-
-  console.log('Load autocloaking')
-  await autocloaking.run(context)
 }
 
 function deactivate () {
