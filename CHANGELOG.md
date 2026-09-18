@@ -2,7 +2,19 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.29.0...master)
+
+## [0.29.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.29.0...v0.28.1) (2026-09-18)
+
+### Added
+
+* Add support for `.dev.vars` ([#125](https://github.com/dotenvx/dotenv-vscode/pull/125))
+
+### Changed
+
+* Better cloaking ([#124](https://github.com/dotenvx/dotenv-vscode/pull/124))
+* Better extension handling ([#123](https://github.com/dotenvx/dotenv-vscode/pull/123))
+* Bump dependencies ([#122](https://github.com/dotenvx/dotenv-vscode/pull/122))
 
 ### Removed
 
