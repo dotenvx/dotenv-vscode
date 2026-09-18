@@ -99,6 +99,27 @@ Multiple languages supported.
 
 <hr/>
 
+### Custom dotenv files
+
+Use VS Code's `files.associations` setting to enable syntax highlighting, cloaking,
+and the auto-cloaking toggle for custom filenames. For example, in your project's
+`.vscode/settings.json`:
+
+```json
+{
+  "files.associations": {
+    ".dev.vars": "dotenv",
+    "**/.env.d/*": "dotenv"
+  }
+}
+```
+
+Cloaking follows the file's language mode. Selecting another language removes the
+cloak. In-code completion and secret peeking still read the workspace's `.env` file;
+these associations do not change their source.
+
+<hr/>
+
 ### dotenv-vault (included but optional)
 
 Manage your secrets using <strong>dotenv-vault</strong>'s all-in-one toolkit. Say goodbye to scattered secrets across multiple platforms and tools.
