@@ -1,7 +1,3 @@
-<a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode">
-<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1679527751/dotenv-vscode_ilezvb.png"/>
-</a>
-
 <div align="center">
   <table>
     <tr>
@@ -18,7 +14,7 @@
   </table>
 </div>
 
-# dotenv-vscode
+# Dotenv Official
 
 #### Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking.
 
@@ -31,7 +27,7 @@ Install using VSCode Command Palette
 1. Go to `View -> Command Palette` or press `Ctrl+Shift+P`
 2. Then enter `Install Extension`
 3. Search for `Dotenv`
-4. Select `Official Dotenv` and click `Install`
+4. Select `Dotenv Official` and click `Install`
 
 ## Usage
 
@@ -54,8 +50,6 @@ Multiple .env file types supported.
 * .env.development
 * .env.staging
 * .env.production
-* .env.vault
-* .env.me
 * .env.*
 * .flaskenv
 
@@ -120,52 +114,10 @@ these associations do not change their source.
 
 <hr/>
 
-### dotenv-vault (included but optional)
-
-Manage your secrets using <strong>dotenv-vault</strong>'s all-in-one toolkit. Say goodbye to scattered secrets across multiple platforms and tools.
-
-<a href="https://dotenv.org?r=8" target="_blank">Read more about dotenv-vault here</a>. 
-
-Usage is similar to git. Run `CMD+Shift+P` (or `Ctrl+Shift+P`) and start typing `dotenv`.
-
-```bash
-dotenv new
-```
-
-Follow those instructions and then run:
-
-```bash
-dotenv login
-```
-
-Then run push and pull
-
-```bash
-dotenv push
-dotenv pull
-```
-
-See <a href="https://dotenv.org?r=8" target="_blank">dotenv-vault</a> in action:
-
-<img src="https://raw.githubusercontent.com/dotenv-org/dotenv-vscode/master/overview.gif">
-
-Visit [dotenv.org/docs](https://www.dotenv.org/docs/security/overview?r=8) to learn more.
-
 ## Commands
 
-```
-dotenv new       Create your project
-dotenv login     Log in to dotenv-vault
-dotenv logout    Log out
-dotenv open      Open project page
-dotenv push      Push .env securely
-dotenv pull      Pull .env securely
-dotenv versions  List version history
-dotenv whoami    Display the current logged in user
-dotenv status    Check dotenv-vault operational status
-```
-
-Visit [dotenv.org/docs](https://www.dotenv.org/docs/dotenv-vault?r=8) for details per command.
+Run `Dotenv: Toggle auto-cloaking` from the Command Palette, or use the toggle
+above a dotenv file, to show or hide its values.
 
 ## CHANGELOG
 

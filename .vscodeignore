@@ -11,6 +11,4 @@ vsc-extension-quickstart.md
 
 .DS_Store
 .env*
-!.env.project
-!.env.vault
 !.env.example

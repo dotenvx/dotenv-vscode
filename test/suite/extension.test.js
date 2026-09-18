@@ -75,3 +75,15 @@ describe('Custom dotenv cloaking', () => {
     }
   })
 })
+
+describe('Dotenv editor commands', () => {
+  it('registers only the auto-cloaking command and no sidebar', async function () {
+    const extension = vscode.extensions.getExtension('dotenv.dotenv-vscode')
+    await extension.activate()
+    const commands = await vscode.commands.getCommands(true)
+    assert.deepStrictEqual(commands.filter(command => command.startsWith('dotenv.')), ['dotenv.toggleAutocloaking'])
+    assert.strictEqual(extension.packageJSON.displayName, 'Dotenv Official')
+    assert.strictEqual(extension.packageJSON.contributes.views, undefined)
+    assert.strictEqual(extension.packageJSON.contributes.viewsContainers, undefined)
+  })
+})

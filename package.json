@@ -1,7 +1,7 @@
 {
   "name": "dotenv-vscode",
-  "displayName": "Dotenv Official +Vault",
-  "description": "Official Dotenv. Syntax highlighting, auto-cloaking, auto-completion, in-code secret peeking, and optionally dotenv-vault.",
+  "displayName": "Dotenv Official",
+  "description": "Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking for .env files.",
   "author": "Mot @motdotla",
   "version": "0.28.1",
   "license": "MIT",
@@ -23,10 +23,7 @@
     "vscode": "^1.65.0"
   },
   "categories": [
-    "Languages",
-    "Formatters",
-    "SCM Providers",
-    "Other"
+    "Languages"
   ],
   "activationEvents": [
     "*"
@@ -35,7 +32,7 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Dotenv Official +Vault",
+      "title": "Dotenv Official",
       "properties": {
         "dotenv.enableAutocloaking": {
           "scope": "resource",
@@ -58,63 +55,23 @@
         "dotenv.cloakIcon": {
           "scope": "resource",
           "type": "string",
-          "default": "█",
+          "default": "\u2588",
           "description": "Change the icon of the cloak for your .env files"
         }
       }
     },
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "dotenv",
-          "title": "Dotenv",
-          "icon": "media/sidebar-icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "dotenv": [
-        {
-          "id": "dotenv.view.vault",
-          "icon": "media/dotenv-icon.png",
-          "name": "Vault"
-        }
-      ]
-    },
-    "viewsWelcome": [
-      {
-        "view": "dotenv.view.vault",
-        "contents": "Getting Started with dotenv-vault [learn more](https://www.dotenv.org/docs/getting-started/with-dotenv-vault)\nStep 1: Create your project\n[Dotenv: new](command:dotenv.new)\nStep 2: Authenticate against it\n[Dotenv: login](command:dotenv.login)\nStep 3: View it\n[Dotenv: open](command:dotenv.open)\nThat's it! Thanks for using dotenv-vault.\n---\nCommands [learn more](https://www.dotenv.org/docs/dotenv-vault)\n[Dotenv: push](command:dotenv.push)\n[Dotenv: pull](command:dotenv.pull)\n[Dotenv: whoami](command:dotenv.whoami)\n[Dotenv: logout](command:dotenv.logout)\n[Dotenv: versions](command:dotenv.versions)\n[Dotenv: status](command:dotenv.status)\n\nProTip: You can run any of these commands by typing 'Ctrl+Shift+P', then 'Dotenv'."
-      }
-    ],
     "languages": [
       {
         "id": "dotenv",
         "aliases": [
+          "Dotenv",
           ".env",
           "env",
-          "environment variables",
-          "secrets",
-          "vault",
-          "encrypt",
-          "password",
-          "api",
-          "key",
-          "cloak",
-          "mask",
-          "hide",
-          "blur",
-          "dotenv-vault"
+          "environment variables"
         ],
         "extensions": [
           ".env",
-          ".flaskenv",
-          ".fart",
-          ".vault",
-          ".project",
-          ".me",
-          ".secret",
-          ".sync"
+          ".flaskenv"
         ],
         "configuration": "./syntaxes/language-configuration.json",
         "filenamePatterns": [
@@ -130,51 +87,6 @@
       }
     ],
     "commands": [
-      {
-        "command": "dotenv.login",
-        "category": "Dotenv",
-        "title": "login"
-      },
-      {
-        "command": "dotenv.logout",
-        "category": "Dotenv",
-        "title": "logout"
-      },
-      {
-        "command": "dotenv.new",
-        "category": "Dotenv",
-        "title": "new"
-      },
-      {
-        "command": "dotenv.open",
-        "category": "Dotenv",
-        "title": "open"
-      },
-      {
-        "command": "dotenv.pull",
-        "category": "Dotenv",
-        "title": "pull"
-      },
-      {
-        "command": "dotenv.push",
-        "category": "Dotenv",
-        "title": "push"
-      },
-      {
-        "command": "dotenv.status",
-        "category": "Dotenv",
-        "title": "status"
-      },
-      {
-        "command": "dotenv.versions",
-        "category": "Dotenv",
-        "title": "versions"
-      },
-      {
-        "command": "dotenv.whoami",
-        "category": "Dotenv",
-        "title": "whoami"
-      },
       {
         "command": "dotenv.toggleAutocloaking",
         "category": "Dotenv",
@@ -210,9 +122,7 @@
   },
   "keywords": [
     "dotenv",
-    "dotenv-vault",
     "environment variables",
-    "vault",
     "env",
     ".env",
     "environment",
@@ -223,7 +133,6 @@
     "development",
     "productivity",
     "secrets",
-    "sync",
     "cloak",
     "mask",
     "hide",
