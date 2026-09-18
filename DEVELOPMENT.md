@@ -2,6 +2,17 @@
 
 ## Setup
 
+Use Node.js 22.12 or newer and install the locked dependencies:
+
+```
+npm ci
+```
+
+The VS Code API types stay pinned to the minimum supported version in `engines.vscode`.
+Standard uses its own compatible ESLint dependency.
+
+For vault development:
+
 ```
 npx dotenv-vault pull
 ```
@@ -21,6 +32,9 @@ CMD + R to refresh the extension, after making changes.
 ```
 npm test
 ```
+
+Tests download the current stable VS Code and use a temporary workspace containing
+`HELLO=World` in its `.env` file. No vault credentials or local `.env` file are needed.
 
 ## Packaging
 
