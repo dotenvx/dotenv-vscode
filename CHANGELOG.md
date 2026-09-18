@@ -4,6 +4,11 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.0...master)
 
+### Removed
+
+* Removed the dotenv-vault integration, commands, and sidebar. The extension is now
+  named Dotenv Official and focuses on editing `.env` files.
+
 ## [0.28.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.1...v0.28.0) (2023-11-04)
 
 ### Added

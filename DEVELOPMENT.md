@@ -11,12 +11,6 @@ npm ci
 The VS Code API types stay pinned to the minimum supported version in `engines.vscode`.
 Standard uses its own compatible ESLint dependency.
 
-For vault development:
-
-```
-npx dotenv-vault pull
-```
-
 ## Running in Debug Mode
 
 Open this project in VSCode.
@@ -34,7 +28,7 @@ npm test
 ```
 
 Tests download the current stable VS Code and use a temporary workspace containing
-`HELLO=World` in its `.env` file. No vault credentials or local `.env` file are needed.
+`HELLO=World` in its `.env` file. No credentials or local `.env` file are needed.
 
 ## Packaging
 
