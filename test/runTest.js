@@ -11,7 +11,7 @@ async function main () {
     await fs.writeFile(path.join(workspacePath, '.env'), 'HELLO=World\n')
     await fs.mkdir(path.join(workspacePath, '.vscode'))
     await fs.writeFile(path.join(workspacePath, '.vscode', 'settings.json'), JSON.stringify({
-      'files.associations': { '*.css': 'css', '.env.custom': 'plaintext' }
+      'files.associations': { '*.css': 'css', '.env.custom': 'plaintext', '.dev.vars': 'dotenv', '**/.env.d/*': 'dotenv' }
     }))
     // The folder containing the Extension Manifest package.json
     // Passed to `--extensionDevelopmentPath`

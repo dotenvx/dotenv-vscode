@@ -27,6 +27,7 @@ function setup () {
       onDidChangeActiveTextEditor: subscribe('active')
     },
     workspace: {
+      onDidOpenTextDocument: subscribe('open'),
       onDidChangeTextDocument: subscribe('edit'),
       onDidChangeConfiguration: subscribe('configuration')
     },
@@ -94,6 +95,14 @@ describe('autocloaking lifecycle', () => {
     await fixture.run(fixture.context)
     fixture.calls.length = 0
     await fixture.listeners.configuration({ affectsConfiguration: key => key === 'dotenv.cloakIcon' })
+    assert.deepStrictEqual(fixture.calls, fixture.editors)
+  })
+
+  it('refreshes visible editors when their document language changes', async () => {
+    const fixture = setup()
+    await fixture.run(fixture.context)
+    fixture.calls.length = 0
+    fixture.listeners.open({ uri: { toString: () => 'file:///project/.env' } })
     assert.deepStrictEqual(fixture.calls, fixture.editors)
   })
 
