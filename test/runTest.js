@@ -6,8 +6,13 @@ const { runTests } = require('@vscode/test-electron')
 
 async function main () {
   const workspacePath = await fs.mkdtemp(path.join(os.tmpdir(), 'dotenv-vscode-test-'))
+  const userDataPath = await fs.mkdtemp(path.join(os.tmpdir(), 'dotenv-vscode-profile-'))
   try {
     await fs.writeFile(path.join(workspacePath, '.env'), 'HELLO=World\n')
+    await fs.mkdir(path.join(workspacePath, '.vscode'))
+    await fs.writeFile(path.join(workspacePath, '.vscode', 'settings.json'), JSON.stringify({
+      'files.associations': { '*.css': 'css', '.env.custom': 'plaintext' }
+    }))
     // The folder containing the Extension Manifest package.json
     // Passed to `--extensionDevelopmentPath`
     const extensionDevelopmentPath = path.resolve(__dirname, '../')
@@ -20,13 +25,14 @@ async function main () {
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: [workspacePath, '--disable-extensions', '--skip-welcome', '--skip-release-notes']
+      launchArgs: [workspacePath, `--user-data-dir=${userDataPath}`, '--disable-extensions', '--skip-welcome', '--skip-release-notes']
     })
   } catch (err) {
     console.error('Failed to run tests', err)
     process.exitCode = 1
   } finally {
     await fs.rm(workspacePath, { recursive: true, force: true })
+    await fs.rm(userDataPath, { recursive: true, force: true })
   }
 }
 

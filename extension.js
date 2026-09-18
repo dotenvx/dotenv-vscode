@@ -2,13 +2,9 @@ const autocloaking = require('./lib/autocloaking')
 const autocompletion = require('./lib/autocompletion')
 const commands = require('./lib/commands')
 const peeking = require('./lib/peeking')
-const fileAssociations = require('./lib/fileAssociations')
 
 async function activate (context) {
   console.log('Dotenv is active')
-
-  console.log('Set file associations')
-  fileAssociations.run()
 
   console.log('Load autocompletion')
   await autocompletion.run(context)
