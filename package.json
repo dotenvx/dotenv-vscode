@@ -3,7 +3,7 @@
   "displayName": "Dotenv Official",
   "description": "Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking for .env files.",
   "author": "Mot @motdotla",
-  "version": "0.28.1",
+  "version": "0.29.0",
   "license": "MIT",
   "homepage": "https://github.com/dotenv-org/dotenv-vscode",
   "icon": "dotenv.png",
@@ -55,7 +55,7 @@
         "dotenv.cloakIcon": {
           "scope": "resource",
           "type": "string",
-          "default": "\u2588",
+          "default": "█",
           "description": "Change the icon of the cloak for your .env files"
         }
       }
