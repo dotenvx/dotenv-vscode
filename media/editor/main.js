@@ -40,9 +40,16 @@ monaco.languages.setMonarchTokensProvider('dotenv', {
   tokenizer: {
     root: [
       [/^\s*(?:export\s+)?[\w.-]+(?=\s*[=:])/, 'key'],
-      [/#.*$/, 'comment'], [/=/, 'delimiter'],
+      [/#.*$/, 'comment'], [/[=:]/, { cases: { '@eos': 'delimiter', '@default': { token: 'delimiter', next: '@value' } } }],
       [/"/, 'string', '@double'], [/'/, 'string', '@single'], [/`/, 'string', '@backtick'],
       [/[^#"'`=]+/, 'string']
+    ],
+    value: [
+      [/[ \t]+$/, 'white', '@pop'],
+      [/[ \t]+/, 'white'],
+      [/[+-]?[0-9](?:[0-9_]*[0-9])?(?:\.[0-9](?:[0-9_]*[0-9])?)?(?=[ \t]*(?:#|$))/, 'number', '@pop'],
+      [/[^#"'`]+/, 'string', '@pop'],
+      [/./, { token: '@rematch', next: '@pop' }]
     ],
     double: [[/\\./, 'string.escape'], [/"/, 'string', '@pop'], [/[^"\\]+/, 'string']],
     single: [[/'/, 'string', '@pop'], [/[^']+/, 'string']],

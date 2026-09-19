@@ -1,6 +1,7 @@
 /* global getComputedStyle, requestAnimationFrame */
 import { bridge } from './setup.js'
 import { sourceEditor } from '../../media/editor/main.js'
+import * as monaco from 'monaco-editor/editor/editor.api.js'
 let frames = 0
 let maskedFrames = 0
 let revealedFrames = 0
@@ -34,6 +35,10 @@ async function run () {
     await wait(50)
   }
   if (!sourceEditor) throw new Error('Editor did not load')
+  for (const [value, numeric] of [['3000', true], ['-0.5', true], ['+1_000.25', true], ['42 # comment', true], ['127.0.0.1', false], ['abc123', false], ['12px', false], ['"123"', false], ['1.2.3', false], ['1_', false]]) {
+    const tokens = monaco.editor.tokenize(`KEY=${value}`, 'dotenv')[0]
+    if (tokens.some(token => token.type === 'number.dotenv') !== numeric) throw new Error(`Incorrect number highlighting: ${value}`)
+  }
   await waitFrames(3)
   for (let i = 0; i < 10; i++) {
     const model = sourceEditor.getModel()
