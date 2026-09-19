@@ -3,7 +3,7 @@
   "displayName": "Dotenv Official",
   "description": "Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking for .env files.",
   "author": "Mot @motdotla",
-  "version": "0.30.2",
+  "version": "0.31.0",
   "license": "MIT",
   "homepage": "https://github.com/dotenv-org/dotenv-vscode",
   "icon": "dotenv.png",
