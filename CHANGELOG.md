@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.0.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.1.0...master)
+
+## [1.1.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.0.0...v1.1.0) (2026-09-19)
+
+### Added
+
+* Add support for cloaking docker-compose.yml files ([#132](https://github.com/dotenvx/dotenv-vscode/pull/132))
 
 ## [1.0.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...v1.0.0) (2026-09-19)
 
