@@ -70,9 +70,9 @@ function applyMask () {
   if (!editor) return
   const model = editor.getModel()
   decorations.set(masked
-    ? entries(model.getValue()).filter(entry => entry.end > entry.start).map(entry => {
-      const start = model.getPositionAt(entry.start)
-      const end = model.getPositionAt(entry.end)
+    ? entries(model.getValue()).filter(entry => entry.maskEnd > entry.maskStart).map(entry => {
+      const start = model.getPositionAt(entry.maskStart)
+      const end = model.getPositionAt(entry.maskEnd)
       return { range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column), options: { inlineClassName: 'dotenv-mask', stickiness: monaco.editor.TrackedRangeStickiness.AlwaysGrowsWhenTypingAtEdges } }
     })
     : [])

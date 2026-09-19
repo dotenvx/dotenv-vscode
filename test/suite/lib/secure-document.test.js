@@ -2,6 +2,18 @@ const { describe, it } = require('mocha')
 const assert = require('assert')
 const { entries, change, normalizeEol } = require('../../../lib/secure-document')
 describe('Monaco dotenv value ranges', () => {
+  it('keeps quote delimiters visible while masking their contents', () => {
+    for (const quote of ['"', "'", '`']) {
+      const text = `KEY=${quote}first\\${quote}second\nthird${quote} # comment\nEMPTY=${quote}${quote}\nNEXT=plain\n`
+      const found = entries(text)
+      assert.deepStrictEqual(found.map(entry => text.slice(entry.maskStart, entry.maskEnd)), [`first\\${quote}second\nthird`, '', 'plain'])
+      assert.strictEqual(text[found[0].maskStart - 1], quote)
+      assert.strictEqual(text[found[0].maskEnd], quote)
+      const unfinished = `KEY=${quote}secret\\${quote}`
+      const entry = entries(unfinished)[0]
+      assert.strictEqual(unfinished.slice(entry.maskStart, entry.maskEnd), `secret\\${quote}`)
+    }
+  })
   it('covers multiline secrets, duplicate keys and quoted hashes without masking comments', () => {
     const text = '# comment\r\nexport KEY = "first\r\nsecond" # keep\r\nKEY=third\r\nHASH="with#hash"\r\nEMPTY=\r\n'
     const found = entries(text)
