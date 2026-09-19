@@ -1,0 +1,10 @@
+html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background: var(--vscode-editor-background); color: var(--vscode-editor-foreground); }
+.lens { height: 26px; padding-left: 62px; display: flex; align-items: center; gap: 16px; font: 12px var(--vscode-font-family); color: var(--vscode-editorCodeLens-foreground); }
+button { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+button:hover { color: var(--vscode-textLink-activeForeground); }
+button:focus-visible { outline: 1px solid var(--vscode-focusBorder); }
+#editor { height: calc(100% - 26px); }
+/* The editor never becomes visible until its model has masking decorations. */
+#editor.preparing { visibility: hidden !important; }
+.monaco-editor .view-line .dotenv-mask { color: transparent !important; background: var(--vscode-editor-foreground) !important; forced-color-adjust: none; }
+.monaco-editor .view-line .dotenv-mask::selection { color: transparent !important; }
