@@ -55,12 +55,28 @@ Click `Extensions` > `...` > `Install from VSIX` > `Select dotenv-vscode-*-*-*.v
 
 ## Publishing
 
-Publishing runs automatically when a `vX.Y.Z` tag is pushed, after audit, lint,
-tests, and packaging pass. The tag must match the version in `package.json`.
+Publishing to the Visual Studio Marketplace and Open VSX runs automatically when
+a `vX.Y.Z` tag is pushed, after audit, lint, tests, and packaging pass. The tag
+must match the version in `package.json`. Each registry has an independent job,
+so a failure at one does not cancel publishing to the other.
 
 One-time setup: add a repository Actions secret named `VSCE_PAT` in GitHub under
 Settings > Secrets and variables > Actions. Use a valid Marketplace token with
 the Manage scope and access to the `dotenv` publisher.
+
+For Open VSX, complete the [publisher setup](https://github.com/eclipse-openvsx/openvsx/wiki/Publishing-Extensions):
+
+1. Sign in to [Open VSX](https://open-vsx.org) with GitHub, link your Eclipse
+   account, and review and accept the Publisher Agreement.
+2. Generate an [Open VSX access token](https://open-vsx.org/user-settings/tokens)
+   and save it as the repository Actions secret `OVSX_PAT`.
+3. Ensure the token's account can publish to the `dotenv` namespace (the
+   `publisher` in `package.json`). If it does not exist, set `OVSX_PAT` in your
+   local environment and run `npx --no-install ovsx create-namespace dotenv`.
+   If it already exists, obtain membership instead. Marketplace publisher access
+   does not grant Open VSX access.
+4. [Claim namespace ownership](https://github.com/eclipse-openvsx/openvsx/wiki/Namespace-Access#how-to-claim-a-namespace)
+   to have the extension marked as verified.
 
 From a clean, up-to-date `master` branch, create and push the next release:
 
@@ -71,8 +87,9 @@ git push origin master --follow-tags
 
 `npm version patch` updates the package files and creates the version commit and
 annotated tag. Use a new version for each release; already published versions
-cannot be published again. No Marketplace token is needed on your machine for
-this workflow.
+cannot be published again. No publishing tokens are needed on your machine for
+the tag workflow. If only one registry fails, fix its credentials or access and
+use GitHub Actions **Re-run failed jobs** to retry only that registry.
 
 To publish manually instead:
 
@@ -80,6 +97,19 @@ To publish manually instead:
 npm run login -- dotenv
 npm run publish
 ```
+
+To publish a packaged version to Open VSX manually, set `OVSX_PAT` in your local
+environment, then run:
+
+```bash
+npm run package
+npx --no-install ovsx publish dotenv-vscode-X.Y.Z.vsix --registryUrl https://open-vsx.org
+```
+
+Replace `X.Y.Z` with the version in `package.json`. This also lets you publish an
+existing Marketplace release to Open VSX without trying to republish it to the
+Marketplace. The Open VSX token is separate from `VSCE_PAT`; keep both out of the
+repository.
 
 [1] https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions
 [2] https://marketplace.visualstudio.com/manage/publishers/dotenv

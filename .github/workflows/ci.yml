@@ -62,12 +62,17 @@ jobs:
       - run: npm run package
 
   publish:
+    name: Publish to ${{ matrix.registry }}
     needs: [audit, standard, test, package]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        registry: [marketplace, open-vsx]
     concurrency:
-      group: marketplace-publish
+      group: ${{ matrix.registry }}-publish
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -88,6 +93,7 @@ jobs:
       - run: npm ci
       - run: npm run package
       - name: Publish to Visual Studio Marketplace
+        if: matrix.registry == 'marketplace'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |
@@ -97,3 +103,14 @@ jobs:
           fi
           version=$(node -p "require('./package.json').version")
           npx --no-install vsce publish --packagePath "dotenv-vscode-${version}.vsix"
+      - name: Publish to Open VSX
+        if: matrix.registry == 'open-vsx'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then
+            echo 'Add the OVSX_PAT repository secret before publishing.' >&2
+            exit 1
+          fi
+          version=$(node -p "require('./package.json').version")
+          npx --no-install ovsx publish "dotenv-vscode-${version}.vsix" --registryUrl https://open-vsx.org
