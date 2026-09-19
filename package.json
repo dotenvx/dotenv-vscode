@@ -26,7 +26,8 @@
     "Languages"
   ],
   "activationEvents": [
-    "*"
+    "*",
+    "onCustomEditor:dotenv.secureEditor"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -92,6 +93,18 @@
         "category": "Dotenv",
         "title": "Toggle auto-cloaking"
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "dotenv.secureEditor",
+        "displayName": "Dotenv Secure Editor",
+        "selector": [
+          {
+            "filenamePattern": "**/{.env*,*.env,.flaskenv,.dev.vars*,.env.d/*}"
+          }
+        ],
+        "priority": "default"
+      }
     ]
   },
   "scripts": {
@@ -140,6 +153,7 @@
     "blur"
   ],
   "dependencies": {
+    "codemirror": "^5.65.21",
     "dotenv": "^18.0.0"
   }
 }
