@@ -238,7 +238,7 @@ above a dotenv file, to show or hide its values.
 
 ## CHANGELOG
 
-See [CHANGELOG](CHANGELOG.md)
+See the Changelog tab on this extension’s Marketplace page.
 
 <br/>
 <br/>

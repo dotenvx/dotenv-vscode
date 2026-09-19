@@ -5,20 +5,12 @@
   "author": "Mot @motdotla",
   "version": "0.31.0",
   "license": "MIT",
-  "homepage": "https://github.com/dotenv-org/dotenv-vscode",
   "icon": "dotenv.png",
   "galleryBanner": {
     "color": "#ECD53F",
     "theme": "light"
   },
   "qna": false,
-  "bugs": {
-    "url": "https://github.com/dotenv-org/dotenv-vscode/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dotenv-org/dotenv-vscode.git"
-  },
   "engines": {
     "vscode": "^1.65.0"
   },
@@ -56,7 +48,7 @@
         "dotenv.cloakIcon": {
           "scope": "resource",
           "type": "string",
-          "default": "\u2588",
+          "default": "█",
           "description": "Change the icon of the cloak for your .env files"
         }
       }
@@ -111,10 +103,10 @@
     "lint": "standard --fix",
     "pretest": "npm run lint",
     "test": "npm run build:editor && node ./test/runTest.js",
-    "package": "npm run lint && vsce package",
+    "package": "npm run lint && vsce package --allow-missing-repository",
     "install-package": "code --install-extension",
     "login": "vsce login",
-    "publish": "npm install && npm run lint && vsce package && vsce publish",
+    "publish": "npm install && npm run lint && vsce package --allow-missing-repository && vsce publish --allow-missing-repository",
     "build:editor": "node scripts/build-editor.js",
     "vscode:prepublish": "npm run build:editor"
   },
