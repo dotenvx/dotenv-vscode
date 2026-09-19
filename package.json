@@ -5,20 +5,12 @@
   "author": "Mot @motdotla",
   "version": "0.31.0",
   "license": "MIT",
-  "homepage": "https://github.com/dotenv-org/dotenv-vscode",
   "icon": "dotenv.png",
   "galleryBanner": {
     "color": "#ECD53F",
     "theme": "light"
   },
   "qna": false,
-  "bugs": {
-    "url": "https://github.com/dotenv-org/dotenv-vscode/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dotenv-org/dotenv-vscode.git"
-  },
   "engines": {
     "vscode": "^1.65.0"
   },
@@ -26,7 +18,8 @@
     "Languages"
   ],
   "activationEvents": [
-    "*"
+    "*",
+    "onCustomEditor:dotenv.sourceEditor"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -92,16 +85,30 @@
         "category": "Dotenv",
         "title": "Toggle auto-cloaking"
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "dotenv.sourceEditor",
+        "displayName": "Dotenv Editor",
+        "selector": [
+          {
+            "filenamePattern": "**/{.env*,*.env,.flaskenv,.dev.vars*,.env.d/*}"
+          }
+        ],
+        "priority": "default"
+      }
     ]
   },
   "scripts": {
     "lint": "standard --fix",
     "pretest": "npm run lint",
-    "test": "node ./test/runTest.js",
+    "test": "npm run build:editor && node ./test/runTest.js",
     "package": "npm run lint && vsce package",
     "install-package": "code --install-extension",
     "login": "vsce login",
-    "publish": "npm install && npm run lint && vsce package && vsce publish"
+    "publish": "npm install && npm run lint && vsce package && vsce publish",
+    "build:editor": "node scripts/build-editor.js",
+    "vscode:prepublish": "npm run build:editor"
   },
   "publisher": "dotenv",
   "devDependencies": {
@@ -110,15 +117,18 @@
     "@types/vscode": "1.65.0",
     "@vscode/test-electron": "^3.1.0",
     "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
     "glob": "^13.0.6",
     "mocha": "^12.0.2",
+    "monaco-editor": "^0.56.0",
     "ovsx": "1.2.0",
     "standard": "^17.1.2",
     "typescript": "^7.0.2"
   },
   "standard": {
     "ignore": [
-      "/test/suite/examples/**"
+      "/test/suite/examples/**",
+      "/media/editor/dist/**"
     ]
   },
   "keywords": [
@@ -141,5 +151,18 @@
   ],
   "dependencies": {
     "dotenv": "^18.0.0"
+  },
+  "overrides": {
+    "monaco-editor": {
+      "dompurify": "^3.4.15"
+    }
+  },
+  "homepage": "https://github.com/dotenvx/dotenv-vscode",
+  "bugs": {
+    "url": "https://github.com/dotenvx/dotenv-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotenvx/dotenv-vscode.git"
   }
 }

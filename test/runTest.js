@@ -29,7 +29,7 @@ async function main () {
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: [workspacePath, `--user-data-dir=${userDataPath}`, '--disable-extensions', '--skip-welcome', '--skip-release-notes']
+      launchArgs: [workspacePath, `--user-data-dir=${userDataPath}`, '--disable-extensions', '--skip-welcome', '--skip-release-notes', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows']
     })
   } catch (err) {
     console.error('Failed to run tests', err)

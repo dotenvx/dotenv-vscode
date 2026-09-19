@@ -6,6 +6,7 @@ Use Node.js 22.12 or newer and install the locked dependencies:
 
 ```
 npm ci
+npm run build:editor
 ```
 
 The VS Code API types stay pinned to the minimum supported version in `engines.vscode`.
@@ -29,6 +30,17 @@ npm test
 
 Tests download the current stable VS Code and use a temporary workspace containing
 `HELLO=World` in its `.env` file. No credentials or local `.env` file are needed.
+
+The Monaco integration test runs the production editor inside a real VS Code
+webview. It checks computed visibility on animation frames during initial loading,
+editing, and tab switches, with an explicit reveal as a positive control. The test
+host disables background throttling so frame checks run even when it is unfocused.
+This checks browser render state; it is not a substitute for recording the screen
+when validating compositor behavior on a particular platform.
+
+`npm run build:editor` bundles the local Monaco editor and worker into
+`media/editor/dist`. Rebuild after frontend changes. Packaging builds these assets
+automatically; renderer test assets are excluded from the VSIX.
 
 ## Packaging
 

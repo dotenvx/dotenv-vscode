@@ -12,3 +12,7 @@ vsc-extension-quickstart.md
 .DS_Store
 .env*
 !.env.example
+scripts/**
+media/editor/main.js
+media/editor/dist/test-renderer.js
+media/editor/dist/test-renderer.css
