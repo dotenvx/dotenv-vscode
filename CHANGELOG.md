@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.1...master)
+
+## [0.30.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.1...v0.30.0) (2026-09-19)
+
+### Added
+
+* Publish to open vsx registry
 
 ## [0.30.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.0...v0.29.0) (2026-09-19)
 
