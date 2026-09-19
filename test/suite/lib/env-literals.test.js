@@ -42,20 +42,20 @@ for (const [language, provider, calls, unrelated] of [
       })
     }
     it('handles masking, empty values, missing keys and missing files', () => {
-      const originalParse = helpers.envParsed
+      const originalParse = helpers.envValues
       const originalPeeking = settings.secretpeekingEnabled
       try {
         settings.secretpeekingEnabled = () => false
-        helpers.envParsed = () => ({ lower_key: 'World', EMPTY: '' })
+        helpers.envValues = () => new Map(Object.entries({ lower_key: 'World', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
         for (const [key, value] of [['lower_key', '███ld'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
           const text = expression(calls[0], `"${key}"`)
           assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))).contents[0], value)
         }
-        helpers.envParsed = () => undefined
+        helpers.envValues = () => new Map()
         const text = expression(calls[0], '"HELLO"')
         assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0], settings.missingText())
       } finally {
-        helpers.envParsed = originalParse
+        helpers.envValues = originalParse
         settings.secretpeekingEnabled = originalPeeking
       }
     })

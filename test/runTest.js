@@ -8,6 +8,7 @@ async function main () {
   const workspacePath = await fs.mkdtemp(path.join(os.tmpdir(), 'dotenv-vscode-test-'))
   const userDataPath = await fs.mkdtemp(path.join(os.tmpdir(), 'dotenv-vscode-profile-'))
   try {
+    await fs.cp(path.join(__dirname, 'suite/examples'), path.join(workspacePath, 'examples'), { recursive: true })
     await fs.writeFile(path.join(workspacePath, '.env'), 'HELLO=World\n')
     await fs.mkdir(path.join(workspacePath, '.vscode'))
     await fs.writeFile(path.join(workspacePath, '.vscode', 'settings.json'), JSON.stringify({
