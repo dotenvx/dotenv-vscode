@@ -2,16 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...master)
 
-### Fixed
+## [0.31.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...v0.30.2) (2026-09-19)
 
-* Discover dotenv files relative to the source file, including `.env.local`, other
-  dotenv variants, and custom Dotenv language associations. Support nested projects
-  and multiple workspace folders in completion and secret peeking. Show conflicting
-  values with their source filenames and include unsaved edits
-  ([#90](https://github.com/dotenvx/dotenv-vscode/issues/90),
-  [#108](https://github.com/dotenvx/dotenv-vscode/issues/108)).
+### Changed
+
+* Discover nested `.env*` files ([#129](https://github.com/dotenvx/dotenv-vscode/pull/129))
 
 ## [0.30.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...v0.30.1) (2026-09-19)
 
