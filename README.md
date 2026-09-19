@@ -18,7 +18,7 @@
 
 #### Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking.
 
-<a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/visual-studio-marketplace/v/dotenv.dotenv-vscode?label=VS%20Marketplace&logo=visual-studio-code" alt="Version"></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
 
 ## Install
 
@@ -35,7 +35,7 @@ Install using VSCode Command Palette
 
 It just works. Open your `.env` files in VSCode, and they will now be syntax highlighted.
 
-<hr/>
+&nbsp;
 
 ### Auto-cloaking
 
@@ -55,7 +55,7 @@ Supported files:
 * .yaml
 * .yml
 
-<hr/>
+&nbsp;
 
 ### Auto-completion
 
@@ -66,7 +66,7 @@ variables from your dotenv files.
 
 Supports JavaScript, TypeScript, Python, Ruby, Go, and more. See [Advanced](#advanced) for language details.
 
-<hr/>
+&nbsp;
 
 ### In-code secret peeking
 
@@ -76,7 +76,7 @@ Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and y
 
 Works across the same languages as auto-completion.
 
-<hr/>
+&nbsp;
 
 ## Commands
 
@@ -257,10 +257,12 @@ it to `[]` to disable YAML cloaking. YAML is not a source for completion or peek
 
 </details>
 
+&nbsp;
+
 ## CHANGELOG
 
 See [CHANGELOG](CHANGELOG.md)
 
-<br/>
-<br/>
+&nbsp;
+
 Thank you for using dotenv-vscode.
