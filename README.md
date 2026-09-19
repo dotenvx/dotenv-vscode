@@ -66,7 +66,21 @@ Multiple .env file types supported.
 
 ### Auto-completion
 
-Start typing `process.env.` (or language specific env statement) and your cursor will be populated with auto-completion options directly from your .env file. Cool!
+Start typing `process.env.` (or a language-specific environment statement) to see
+variables from your dotenv files.
+
+Completion and secret peeking look in the source file's directory and each parent
+directory up to its workspace root. This supports nested apps and monorepos without
+mixing in sibling projects or other workspace folders. Supported names include
+`.env`, `.env.*`, `*.env`, and `.flaskenv`. Custom filenames such as `.dev.vars` work
+when associated with the `dotenv` language through `files.associations`; open files
+with Dotenv selected as their language work too.
+
+Each key appears once in completion, with its source filenames. When files define
+different values for the same key, completion details and hover show each value
+with its filename, nearest directories first. The extension does not guess which
+environment your application runs. Unsaved dotenv edits appear immediately, and
+your project does not need to install the `dotenv` package.
 
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140944/autocomplete_snic6t.gif"/>
 
@@ -120,7 +134,7 @@ Completion and hover support `Environment.GetEnvironmentVariable("NAME")` in C#,
 F#, and Visual Basic, including `System.Environment` calls and the overload with
 an `EnvironmentVariableTarget` argument. Type `(` or `"` in the first argument,
 or request completion while typing a variable name. Hover over the name to peek
-at its value from your workspace's `.env` file.
+at its values from the dotenv files found for that source file.
 
 ```csharp
 var secret = System.Environment.GetEnvironmentVariable("SECRET_KEY");
