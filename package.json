@@ -103,10 +103,10 @@
     "lint": "standard --fix",
     "pretest": "npm run lint",
     "test": "npm run build:editor && node ./test/runTest.js",
-    "package": "npm run lint && vsce package --allow-missing-repository",
+    "package": "npm run lint && vsce package",
     "install-package": "code --install-extension",
     "login": "vsce login",
-    "publish": "npm install && npm run lint && vsce package --allow-missing-repository && vsce publish --allow-missing-repository",
+    "publish": "npm install && npm run lint && vsce package && vsce publish",
     "build:editor": "node scripts/build-editor.js",
     "vscode:prepublish": "npm run build:editor"
   },
@@ -156,5 +156,13 @@
     "monaco-editor": {
       "dompurify": "^3.4.15"
     }
+  },
+  "homepage": "https://github.com/dotenvx/dotenv-vscode",
+  "bugs": {
+    "url": "https://github.com/dotenvx/dotenv-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotenvx/dotenv-vscode.git"
   }
 }
