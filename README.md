@@ -41,6 +41,15 @@ It just works. Open your `.env` files in VSCode, and they will now be syntax hig
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
 
+Cloaking uses temporary editor decorations. The toggle is remembered in extension
+storage without changing your user settings. You can still set
+`dotenv.enableAutocloaking` explicitly; changing that setting resets the saved toggle.
+
+On upgrade, the extension removes only the exact invisible TextMate rules inserted
+by older versions from your global `editor.tokenColorCustomizations`. Other custom
+rules are preserved. Once those legacy rules are removed, cloaking no longer writes
+to your settings.
+
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140588/toggle_itemcq.gif">
 
 Multiple .env file types supported.

@@ -9,7 +9,7 @@
   "icon": "dotenv.png",
   "galleryBanner": {
     "color": "#ECD53F",
-    "theme": "highContrast"
+    "theme": "light"
   },
   "qna": false,
   "bugs": {
