@@ -17,8 +17,11 @@ function setup () {
   const editors = [editor('file:///project/.env'), editor('file:///project/.env')]
   const settings = {
     autocloakingEnabled: () => enabled,
-    mask: async () => calls.push('mask'),
-    unmask: async () => calls.push('unmask')
+    initialize: () => {},
+    removeLegacyMask: async () => {},
+    resetAutocloaking: async () => {},
+    autocloakingOn: async () => { enabled = true },
+    autocloakingOff: async () => { enabled = false }
   }
   const vscode = {
     window: {
@@ -32,12 +35,15 @@ function setup () {
       onDidChangeConfiguration: subscribe('configuration')
     },
     languages: { registerCodeLensProvider: subscribe('lenses') },
-    commands: { registerCommand: subscribe('command') }
+    commands: { registerCommand: (name, callback) => subscribe('command')(callback) }
   }
   const dependencies = {
     vscode,
     './settings': settings,
-    './decorations': { decorate: (context, editor) => calls.push(editor) }
+    './decorations': {
+      decorate: (context, editor) => calls.push(editor),
+      dispose: { dispose: () => disposed.push('decoration') }
+    }
   }
   const module = { exports: {} }
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../../lib/autocloaking.js'), 'utf8'), {
@@ -55,10 +61,10 @@ function setup () {
 }
 
 describe('autocloaking lifecycle', () => {
-  it('decorates all visible editors before the first asynchronous settings write', async () => {
+  it('decorates all visible editors on activation', async () => {
     const fixture = setup()
     const running = fixture.run(fixture.context)
-    assert.deepStrictEqual(fixture.calls, [...fixture.editors, 'mask'])
+    assert.deepStrictEqual(fixture.calls, fixture.editors)
     await running
   })
 
@@ -81,13 +87,13 @@ describe('autocloaking lifecycle', () => {
     assert.deepStrictEqual(fixture.calls, [])
   })
 
-  it('refreshes all editors and the syntax mask when disabling from settings', async () => {
+  it('refreshes all editors when disabling from settings', async () => {
     const fixture = setup()
     await fixture.run(fixture.context)
     fixture.calls.length = 0
     fixture.setEnabled(false)
     await fixture.listeners.configuration({ affectsConfiguration: key => key === 'dotenv.enableAutocloaking' })
-    assert.deepStrictEqual(fixture.calls, [...fixture.editors, 'unmask'])
+    assert.deepStrictEqual(fixture.calls, fixture.editors)
   })
 
   it('refreshes all editors when the cloak appearance changes', async () => {
@@ -106,39 +112,110 @@ describe('autocloaking lifecycle', () => {
     assert.deepStrictEqual(fixture.calls, fixture.editors)
   })
 
+  it('refreshes both editors after toggling in either direction', async () => {
+    const fixture = setup()
+    await fixture.run(fixture.context)
+    for (let i = 0; i < 2; i++) {
+      fixture.calls.length = 0
+      await fixture.listeners.command()
+      assert.deepStrictEqual(fixture.calls, fixture.editors)
+    }
+  })
+
   it('disposes every registered listener', async () => {
     const fixture = setup()
     await fixture.run(fixture.context)
     fixture.context.subscriptions.forEach(subscription => subscription.dispose())
-    assert.deepStrictEqual(fixture.disposed.sort(), Object.keys(fixture.listeners).sort())
+    assert.deepStrictEqual(fixture.disposed.sort(), [...Object.keys(fixture.listeners), 'decoration'].sort())
   })
 })
 
-describe('persistent syntax mask', () => {
-  it('targets the current grammar, migrates the old mask, and preserves other rules', async () => {
-    const customRule = { scope: 'comment', settings: { foreground: '#123456' } }
-    let value = { textMateRules: [customRule, { scope: 'keyword.other.dotenv', settings: { foreground: '#FF000000' } }] }
+describe('cloaking settings isolation', () => {
+  function loadSettings (globalValue, workspaceValue) {
+    const writes = []
+    const stored = new Map()
+    let configured = true
     const module = { exports: {} }
     vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../../lib/settings.js'), 'utf8'), {
       module,
       require: () => ({
         ConfigurationTarget: { Global: 1 },
-        workspace: { getConfiguration: () => ({ get: () => value, update: async (key, next) => { value = next } }) }
+        workspace: {
+          getConfiguration: () => ({
+            get: key => key === 'dotenv.enableAutocloaking' ? configured : workspaceValue || globalValue,
+            inspect: () => ({ globalValue, workspaceValue }),
+            update: async (key, next, target) => {
+              writes.push({ key, next, target })
+              globalValue = next
+            }
+          })
+        }
       })
     })
+    const context = {
+      globalState: {
+        get: key => stored.get(key),
+        update: async (key, value) => { stored.set(key, value) }
+      }
+    }
     const settings = module.exports
-    await settings.mask()
-    const grammar = require('../../../syntaxes/dotenv.tmLanguage.json')
-    const valueScope = grammar.patterns.find(pattern => pattern.comment === 'ENV entry').captures['3'].name
-    assert(value.textMateRules.some(rule => rule.scope === `${grammar.scopeName} ${valueScope}`))
-    assert(!value.textMateRules.some(rule => rule.scope === 'keyword.other.dotenv'))
-    assert.strictEqual(value.textMateRules[0], customRule)
-    assert(value.textMateRules.slice(1).every(rule => rule.settings.foreground.endsWith('00')))
-    const count = value.textMateRules.length
-    await settings.mask()
-    assert.strictEqual(value.textMateRules.length, count)
-    await settings.unmask()
-    assert.strictEqual(value.textMateRules.length, 1)
-    assert.strictEqual(value.textMateRules[0], customRule)
+    settings.initialize(context)
+    return { settings, writes, context, configure: value => { configured = value } }
+  }
+
+  it('does not write settings on a fresh install, toggle, or reload', async () => {
+    const { settings, writes, context } = loadSettings()
+    await settings.removeLegacyMask()
+    assert.strictEqual(settings.autocloakingEnabled(), true)
+    await settings.autocloakingOff()
+    settings.initialize(context)
+    assert.strictEqual(settings.autocloakingEnabled(), false)
+    await settings.autocloakingOn()
+    assert.strictEqual(settings.autocloakingEnabled(), true)
+    assert.deepStrictEqual(writes, [])
+  })
+
+  it('honors configuration changes over a saved toggle', async () => {
+    const { settings, configure } = loadSettings()
+    await settings.autocloakingOn()
+    configure(false)
+    assert.strictEqual(settings.autocloakingEnabled(), false)
+    await settings.autocloakingOn()
+    assert.strictEqual(settings.autocloakingEnabled(), true)
+    await settings.resetAutocloaking()
+    assert.strictEqual(settings.autocloakingEnabled(), false)
+  })
+
+  it('removes only exact generated global rules and never copies workspace colors', async () => {
+    const custom = { scope: 'comment', settings: { foreground: '#123456' } }
+    const modified = { scope: 'keyword.other.dotenv', settings: { foreground: '#FF000000', fontStyle: 'italic' } }
+    const named = { name: 'My rule', scope: 'keyword.other.dotenv', settings: { foreground: '#FF000000' } }
+    const scopes = ['keyword.other.dotenv', ...['', ' string', ' variable', ' keyword', ' constant', ' comment'].map(suffix => `source.dotenv property.value.dotenv${suffix}`)]
+    const legacy = scopes.map(scope => ({ scope, settings: { foreground: '#FF000000' } }))
+    const { settings, writes } = loadSettings({ comments: '#abcdef', textMateRules: [custom, ...legacy, modified, named] }, { strings: '#ffffff' })
+    await settings.removeLegacyMask()
+    assert.strictEqual(writes.length, 1)
+    assert.strictEqual(writes[0].target, 1)
+    assert.strictEqual(writes[0].next.comments, '#abcdef')
+    assert.strictEqual(writes[0].next.strings, undefined)
+    assert.deepStrictEqual(Array.from(writes[0].next.textMateRules), [custom, modified, named])
+    await settings.removeLegacyMask()
+    assert.strictEqual(writes.length, 1)
+  })
+
+  it('removes an empty customization left after legacy cleanup', async () => {
+    const { settings, writes } = loadSettings({ textMateRules: [{ scope: 'keyword.other.dotenv', settings: { foreground: '#FF000000' } }] })
+    await settings.removeLegacyMask()
+    assert.strictEqual(writes.length, 1)
+    assert.strictEqual(writes[0].next, undefined)
+  })
+
+  it('leaves unrelated global and workspace-only rules untouched', async () => {
+    const legacy = { textMateRules: [{ scope: 'keyword.other.dotenv', settings: { foreground: '#FF000000' } }] }
+    for (const value of [undefined, { textMateRules: [] }, { textMateRules: [{ scope: 'comment', settings: { foreground: '#ffffff' } }] }]) {
+      const { settings, writes } = loadSettings(value, legacy)
+      await settings.removeLegacyMask()
+      assert.deepStrictEqual(writes, [])
+    }
   })
 })

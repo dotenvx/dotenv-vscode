@@ -55,6 +55,42 @@ describe('Custom dotenv cloaking', () => {
     })
   }
 
+  it('toggles without writing global settings or changing document contents', async function () {
+    await vscode.extensions.getExtension('dotenv.dotenv-vscode').activate()
+    const settings = require('../../lib/settings')
+    const document = await vscode.workspace.openTextDocument({
+      language: 'dotenv',
+      content: `PLAIN=secret
+QUOTED="secret \${PLAIN}"
+SINGLE='secret'
+`
+    })
+    const original = document.getText()
+    const config = vscode.workspace.getConfiguration()
+    const keys = ['editor.tokenColorCustomizations', 'dotenv.enableAutocloaking']
+    const before = keys.map(key => config.inspect(key).globalValue)
+    assert.deepStrictEqual(before, [undefined, undefined])
+    const initial = settings.autocloakingEnabled()
+    let applied
+    const editor = { document, setDecorations: (type, ranges) => { applied = ranges } }
+    try {
+      await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
+      assert.strictEqual(settings.autocloakingEnabled(), !initial)
+      decorations.decorate({}, editor)
+      assert.strictEqual(applied.length, initial ? 0 : 3)
+      await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
+      assert.strictEqual(settings.autocloakingEnabled(), initial)
+      decorations.decorate({}, editor)
+      assert.strictEqual(applied.length, initial ? 3 : 0)
+      assert.deepStrictEqual(keys.map(key => config.inspect(key).globalValue), before)
+      assert.strictEqual(document.getText(), original)
+    } finally {
+      if (settings.autocloakingEnabled() !== initial) {
+        await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
+      }
+    }
+  })
+
   it('clears the cloak and removes the toggle when switching language modes', async function () {
     const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, '.dev.vars')
     let document = await vscode.workspace.openTextDocument(uri)
