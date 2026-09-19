@@ -4,13 +4,13 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...master)
 
-## [0.31.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...v0.30.2) (2026-09-19)
+## [0.31.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...v0.31.0) (2026-09-19)
 
 ### Changed
 
 * Discover nested `.env*` files ([#129](https://github.com/dotenvx/dotenv-vscode/pull/129))
 
-## [0.30.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...v0.30.1) (2026-09-19)
+## [0.30.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.1...v0.30.2) (2026-09-19)
 
 ### Changed
 
@@ -18,19 +18,19 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
   storage for the toggle, and remove only exact hiding rules left by older versions
   ([#99](https://github.com/dotenvx/dotenv-vscode/issues/99)).
 
-## [0.30.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.1...v0.30.0) (2026-09-19)
+## [0.30.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.0...v0.30.1) (2026-09-19)
 
 ### Added
 
 * Publish to open vsx registry
 
-## [0.30.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.0...v0.29.0) (2026-09-19)
+## [0.30.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.29.0...v0.30.0) (2026-09-19)
 
 ### Added
 
 * Add additional language support for erlang, julia, swift, and clojure ([#127](https://github.com/dotenvx/dotenv-vscode/pull/127))
 
-## [0.29.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.29.0...v0.28.1) (2026-09-18)
+## [0.29.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.1...v0.29.0) (2026-09-18)
 
 ### Added
 
@@ -47,37 +47,37 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 * Removed the dotenv-vault integration, commands, and sidebar. The extension is now
   named Dotenv Official and focuses on editing `.env` files.
 
-## [0.28.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.1...v0.28.0) (2023-11-04)
+## [0.28.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.0...v0.28.1) (2023-11-04)
 
 ### Added
 
 * Add additional files to `.vscodeignore`
 
-## [0.28.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.28.0...v0.27.3) (2023-07-02)
+## [0.28.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.3...v0.28.0) (2023-07-02)
 
 ### Changed
 
 * Bumped `dotenv-vault` cli to `1.24.0`
 
-## [0.27.3](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.3...v0.27.2) (2023-06-15)
+## [0.27.3](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.2...v0.27.3) (2023-06-15)
 
 ### Changed
 
 * Improved environment variable capture [#96](https://github.com/dotenv-org/dotenv-vscode/pull/96)
 
-## [0.27.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.2...v0.27.1) (2023-06-15)
+## [0.27.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.1...v0.27.2) (2023-06-15)
 
 ### Added
 
 * For autocompletion, respect secret peeking setting off or on [#97](https://github.com/dotenv-org/dotenv-vscode/pull/97)
 
-## [0.27.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.1...v0.27.0) (2023-06-15)
+## [0.27.1](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.0...v0.27.1) (2023-06-15)
 
 ### Changed
 
 * `await` for async function to set `files.associations` in extension.js
 
-## [0.27.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.27.0...v0.26.0) (2023-06-15)
+## [0.27.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.26.0...v0.27.0) (2023-06-15)
 
 ### Added
 
