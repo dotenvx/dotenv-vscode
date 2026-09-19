@@ -69,7 +69,7 @@ Multiple languages supported.
 * PHP
 * Go
 * Java
-* C#
+* .NET (C#, F#, Visual Basic)
 * Rust
 
 <hr/>
@@ -88,8 +88,25 @@ Multiple languages supported.
 * PHP
 * Go
 * Java
-* C#
+* .NET (C#, F#, Visual Basic)
 * Rust
+
+<hr/>
+
+### .NET
+
+Completion and hover support `Environment.GetEnvironmentVariable("NAME")` in C#,
+F#, and Visual Basic, including `System.Environment` calls and the overload with
+an `EnvironmentVariableTarget` argument. Type `(` or `"` in the first argument,
+or request completion while typing a variable name. Hover over the name to peek
+at its value from your workspace's `.env` file.
+
+```csharp
+var secret = System.Environment.GetEnvironmentVariable("SECRET_KEY");
+```
+
+This displays `.env` values, not the running application's environment or Windows
+registry values. It does not read `appsettings.json` or resolve `IConfiguration`.
 
 <hr/>
 
