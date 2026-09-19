@@ -1,10 +1,8 @@
-const secureEditor = require('./lib/secure-editor')
 const autocloaking = require('./lib/autocloaking')
 const autocompletion = require('./lib/autocompletion')
 const peeking = require('./lib/peeking')
 
 async function activate (context) {
-  secureEditor.run(context)
   console.log('Dotenv is active')
 
   console.log('Load autocloaking')

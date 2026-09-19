@@ -41,17 +41,9 @@ It just works. Open your `.env` files in VSCode, and they will now be syntax hig
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
 
-Dotenv files open in a source editor with line numbers, syntax highlighting, and
-preserved comments and formatting. Values are masked before the source is sent to
-the view. Click **Toggle auto-cloaking** to reveal and edit the text. Typing updates
-the underlying document; use the usual save, undo, and redo keyboard shortcuts.
-Each view starts masked and hides again when you switch tabs.
-
-This source editor uses a webview, so native editor extensions and all native
-editing commands are not available inside it. Use **Reopen Editor With → Text
-Editor** for the native VS Code editor. That editor uses temporary decorations;
-its values can briefly appear before decorations apply. Its toggle is remembered
-in extension storage, and `dotenv.enableAutocloaking` controls that native view.
+Cloaking uses temporary editor decorations. The toggle is remembered in extension
+storage without changing your user settings. You can still set
+`dotenv.enableAutocloaking` explicitly; changing that setting resets the saved toggle.
 
 On upgrade, the extension removes only the exact invisible TextMate rules inserted
 by older versions from your global `editor.tokenColorCustomizations`. Other custom

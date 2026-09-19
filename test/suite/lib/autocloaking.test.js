@@ -40,7 +40,6 @@ function setup () {
   const dependencies = {
     vscode,
     './settings': settings,
-    './secure-editor': { toggleActive: () => false },
     './decorations': {
       decorate: (context, editor) => calls.push(editor),
       dispose: { dispose: () => disposed.push('decoration') }
