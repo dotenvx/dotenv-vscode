@@ -645,7 +645,7 @@ describe('providers', function () {
 
       const result = providers.csharpHover.provideHover(document, position)
 
-      assert.equal(result.contents[0], settings.missingText())
+      assert.equal(result, undefined)
     })
 
     it('returns value at 0 line and correct position', async function () {

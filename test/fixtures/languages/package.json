@@ -1,0 +1,11 @@
+{
+  "name": "dotenv-test-languages",
+  "publisher": "dotenv-test",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.65.0" },
+  "contributes": {
+    "languages": [
+      { "id": "erlang", "extensions": [".erl", ".hrl"] }
+    ]
+  }
+}

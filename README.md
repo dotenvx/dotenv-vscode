@@ -69,7 +69,13 @@ Multiple languages supported.
 * PHP
 * Go
 * Java
-* C#
+* .NET (C#, F#, Visual Basic)
+* C/C++
+* Julia
+* Erlang
+* Perl
+* Swift
+* Clojure
 * Rust
 
 <hr/>
@@ -88,8 +94,81 @@ Multiple languages supported.
 * PHP
 * Go
 * Java
-* C#
+* .NET (C#, F#, Visual Basic)
+* C/C++
+* Julia
+* Erlang
+* Perl
+* Swift
+* Clojure
 * Rust
+
+<hr/>
+
+### .NET
+
+Completion and hover support `Environment.GetEnvironmentVariable("NAME")` in C#,
+F#, and Visual Basic, including `System.Environment` calls and the overload with
+an `EnvironmentVariableTarget` argument. Type `(` or `"` in the first argument,
+or request completion while typing a variable name. Hover over the name to peek
+at its value from your workspace's `.env` file.
+
+```csharp
+var secret = System.Environment.GetEnvironmentVariable("SECRET_KEY");
+```
+
+This displays `.env` values, not the running application's environment or Windows
+registry values. It does not read `appsettings.json` or resolve `IConfiguration`.
+
+<hr/>
+
+### Environment access examples
+
+Complete environment variable names and hover over them to see values from the
+workspace's `.env` file:
+
+```c
+const char *secret = getenv("SECRET_KEY");
+```
+
+C++ also supports `std::getenv("SECRET_KEY")` and `::getenv("SECRET_KEY")`.
+
+```julia
+secret = ENV["SECRET_KEY"]
+secret = get(ENV, "SECRET_KEY", "fallback")
+```
+
+```erlang
+Secret = os:getenv("SECRET_KEY").
+Secret = os:getenv("SECRET_KEY", "fallback").
+```
+
+Erlang files must use the `erlang` language mode provided by an Erlang extension.
+
+```perl
+my $secret = $ENV{SECRET_KEY};
+my $secret = $ENV{'SECRET_KEY'};
+my $secret = $ENV{"SECRET_KEY"};
+```
+
+Perl suggestions preserve bare keys, single quotes, or double quotes.
+
+```swift
+let secret = ProcessInfo.processInfo.environment["SECRET_KEY"]
+let secret = getenv("SECRET_KEY")
+```
+
+Swift also supports `Foundation.ProcessInfo.processInfo.environment`,
+`Darwin.getenv`, and `Glibc.getenv`.
+
+```clojure
+(System/getenv "SECRET_KEY")
+(java.lang.System/getenv "SECRET_KEY")
+```
+
+Suggestions work inside quotes and while typing a name. Hover respects the secret
+peeking setting. Values reflect `.env`, not the running process; Julia and Erlang defaults
+are not evaluated when a key is missing.
 
 <hr/>
 
