@@ -55,10 +55,29 @@ Click `Extensions` > `...` > `Install from VSIX` > `Select dotenv-vscode-*-*-*.v
 
 ## Publishing
 
-For those with access.
+Publishing runs automatically when a `vX.Y.Z` tag is pushed, after audit, lint,
+tests, and packaging pass. The tag must match the version in `package.json`.
+
+One-time setup: add a repository Actions secret named `VSCE_PAT` in GitHub under
+Settings > Secrets and variables > Actions. Use a valid Marketplace token with
+the Manage scope and access to the `dotenv` publisher.
+
+From a clean, up-to-date `master` branch, create and push the next release:
+
+```bash
+npm version patch
+git push origin master --follow-tags
+```
+
+`npm version patch` updates the package files and creates the version commit and
+annotated tag. Use a new version for each release; already published versions
+cannot be published again. No Marketplace token is needed on your machine for
+this workflow.
+
+To publish manually instead:
 
 ```
-npm version patch
+npm run login -- dotenv
 npm run publish
 ```
 

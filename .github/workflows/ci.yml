@@ -60,3 +60,40 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run package
+
+  publish:
+    needs: [audit, standard, test, package]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: marketplace-publish
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.x
+          cache: npm
+      - name: Verify release tag matches package version
+        run: |
+          node <<'NODE'
+          const { version } = require('./package.json')
+          const tag = process.env.GITHUB_REF_NAME
+          if (!/^\d+\.\d+\.\d+$/.test(version) || tag !== `v${version}`) {
+            console.error(`Release tag ${tag} must match package.json version v${version}`)
+            process.exit(1)
+          }
+          NODE
+      - run: npm ci
+      - run: npm run package
+      - name: Publish to Visual Studio Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then
+            echo 'Add the VSCE_PAT repository secret before publishing.' >&2
+            exit 1
+          fi
+          version=$(node -p "require('./package.json').version")
+          npx --no-install vsce publish --packagePath "dotenv-vscode-${version}.vsix"
