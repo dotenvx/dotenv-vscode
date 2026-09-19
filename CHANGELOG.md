@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.0.0...master)
+
+## [1.0.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.31.0...v1.0.0) (2026-09-19)
+
+### Changed
+
+* Custom editor so that we can completely avoid any flashing. Fixes [#106](https://github.com/dotenvx/dotenv-vscode/issues/106) 
 
 ## [0.31.0](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...v0.31.0) (2026-09-19)
 
