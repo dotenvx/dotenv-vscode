@@ -41,9 +41,24 @@ It just works. Open your `.env` files in VSCode, and they will now be syntax hig
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
 
-Cloaking uses temporary editor decorations. The toggle is remembered in extension
-storage without changing your user settings. You can still set
-`dotenv.enableAutocloaking` explicitly; changing that setting resets the saved toggle.
+Dotenv files open in a Monaco source editor: the same editor component used by VS
+Code, with line numbers, multiple cursors, find/replace, folding, comments, and
+normal text editing. Values are masked before the editor becomes visible and the
+mask updates locally as you type. You can edit and copy while masked; copied text
+contains the actual value. Toggle auto-cloaking to reveal values. Each view starts
+masked and hides again when you switch tabs.
+
+Edits update the underlying document. Use the usual save, undo, and redo shortcuts.
+Font and basic editor settings follow VS Code. Custom theme token rules, arbitrary
+user keybindings, and other extensions do not automatically carry into embedded
+Monaco. The minimap and hover previews are disabled to avoid displaying values
+outside the masked source lines. If a concurrent edit conflicts, your draft remains
+in the view for copying instead of overwriting the other edit.
+
+Use **Reopen Editor With → Text Editor** to use the native VS Code editor. Its
+cloaking uses temporary decorations and can flash values during file opens or tab
+switches. In that native view, the toggle is remembered in extension storage and
+`dotenv.enableAutocloaking` controls cloaking.
 
 On upgrade, the extension removes only the exact invisible TextMate rules inserted
 by older versions from your global `editor.tokenColorCustomizations`. Other custom
