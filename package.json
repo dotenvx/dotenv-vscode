@@ -50,6 +50,19 @@
           "type": "string",
           "default": "█",
           "description": "Change the icon of the cloak for your .env files"
+        },
+        "dotenv.yamlSections": {
+          "type": "array",
+          "scope": "resource",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "env_variables",
+            "environment",
+            "env"
+          ],
+          "description": "YAML section names whose environment values are cloaked in the normal YAML editor. Use an empty array to disable YAML cloaking."
         }
       }
     },
@@ -150,7 +163,8 @@
     "blur"
   ],
   "dependencies": {
-    "dotenv": "^18.0.0"
+    "dotenv": "^18.0.0",
+    "yaml": "^2.9.1"
   },
   "overrides": {
     "monaco-editor": {

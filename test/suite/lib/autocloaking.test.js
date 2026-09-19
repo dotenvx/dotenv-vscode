@@ -40,6 +40,7 @@ function setup () {
   const dependencies = {
     vscode,
     './secure-editor': { toggleActive: () => false },
+    './yaml-cloaking': { supported: () => false },
     './settings': settings,
     './decorations': {
       decorate: (context, editor) => calls.push(editor),
