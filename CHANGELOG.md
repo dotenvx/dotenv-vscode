@@ -2,9 +2,11 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.1...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...master)
 
-### Fixed
+## [0.30.2](https://github.com/dotenv-org/dotenv-vscode/compare/v0.30.2...v0.30.1) (2026-09-19)
+
+### Changed
 
 * Stop writing user settings for auto-cloaking. Use editor decorations and extension
   storage for the toggle, and remove only exact hiding rules left by older versions
