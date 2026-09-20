@@ -30,7 +30,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '.HELLO')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position for import.meta', async function () {
@@ -53,7 +53,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '.HELLO')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -78,7 +78,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '["HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -103,7 +103,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position for os.getenv format', async function () {
@@ -126,7 +126,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position for os.environ[] format', async function () {
@@ -149,7 +149,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '["HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -174,7 +174,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '["HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position for $_SERVER[] format', async function () {
@@ -197,7 +197,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '["HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position for getenv() format', async function () {
@@ -220,7 +220,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -245,7 +245,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -270,7 +270,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -295,7 +295,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -320,7 +320,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
 
     it('returns undefined at line 0 and wrong position with var_os format', async function () {
@@ -343,7 +343,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -368,7 +368,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -393,7 +393,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 
@@ -418,7 +418,7 @@ describe('providers', function () {
       const item = result.find(item => item.label.label === 'HELLO')
       assert.equal(item.insertText, '("HELLO"')
       assert.equal(item.label.label, 'HELLO')
-      assert.equal(item.label.detail, ' World')
+      assert.equal(item.label.detail, ' █████')
     })
   })
 

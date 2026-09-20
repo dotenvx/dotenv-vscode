@@ -47,7 +47,7 @@ for (const [language, provider, calls, unrelated] of [
       try {
         settings.secretpeekingEnabled = () => false
         helpers.envValues = () => new Map(Object.entries({ lower_key: 'World', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
-        for (const [key, value] of [['lower_key', '███ld'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
+        for (const [key, value] of [['lower_key', '█████'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
           const text = expression(calls[0], `"${key}"`)
           assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))).contents[0], value)
         }
