@@ -3,7 +3,7 @@
   "displayName": "Dotenv Official",
   "description": "Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking for .env files.",
   "author": "Mot @motdotla",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "license": "MIT",
   "icon": "dotenv.png",
   "galleryBanner": {
