@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.4.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.5.0...master)
+
+## [1.5.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.4.0...v1.5.0) (2026-09-20)
+
+### Added
+
+* Add support for decrypting encrypted values ([#137](https://github.com/dotenvx/dotenv-vscode/pull/137))
 
 ## [1.4.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.3.0...v1.4.0) (2026-09-20)
 

@@ -11,6 +11,7 @@ import 'monaco-editor/editor/contrib/contextmenu/browser/contextmenu.js'
 import 'monaco-editor/editor/contrib/bracketMatching/browser/bracketMatching.js'
 import 'monaco-editor/editor/contrib/folding/browser/folding.js'
 import { entries } from '../../lib/secure-document'
+import { decryptHover } from './decrypt-hover'
 
 const vscode = acquireVsCodeApi()
 const client = Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-')
@@ -20,6 +21,8 @@ const toggle = document.getElementById('toggle')
 const workerUrl = URL.createObjectURL(new Blob([`importScripts(${JSON.stringify(container.dataset.worker)})`], { type: 'text/javascript' }))
 self.MonacoEnvironment = { getWorker: () => new Worker(workerUrl) }
 let editor
+let encryptedHover
+let filename
 let masked = true
 let applying = false
 let previous = ''
@@ -87,6 +90,7 @@ function applyMask () {
   toggle.setAttribute('aria-label', masked ? 'Reveal dotenv values' : 'Hide dotenv values')
 }
 function conceal () {
+  encryptedHover?.hide()
   container.classList.add('preparing')
   masked = true
   applyMask()
@@ -96,6 +100,7 @@ function conceal () {
   }
 }
 function toggleMask () {
+  encryptedHover?.hide()
   if (!editor) return
   container.classList.add('preparing')
   masked = !masked
@@ -105,6 +110,8 @@ function toggleMask () {
   editor.focus()
 }
 function updateDocument (message) {
+  filename = message.filename
+  encryptedHover?.hide()
   if (pending.size) {
     if (message.version > version) {
       conflict = true
@@ -134,6 +141,7 @@ function updateDocument (message) {
       ariaLabel: 'Dotenv source editor. Values are visually masked until revealed.'
     })
     decorations = editor.createDecorationsCollection()
+    encryptedHover = decryptHover(editor, request, () => ({ filename, version }))
     editor.addAction({ id: 'dotenv.save', label: 'Save', keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS], run: () => request('save') })
     for (const [id, keys] of [['undo', [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyZ]], ['redo', [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyZ, monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyY]]]) {
       editor.addAction({ id, label: id === 'undo' ? 'Undo' : 'Redo', keybindings: keys, run: () => request(id) })
@@ -173,8 +181,9 @@ window.addEventListener('message', event => {
   if (message.type === 'toggle') { toggleMask(); return }
   if (message.client !== client) return
   if (message.type === 'document') updateDocument(message)
+  if (message.type === 'decrypted') encryptedHover?.receive(message)
   if (message.type === 'ack') { pending.delete(message.id); version = message.version }
-  if (message.type === 'conflict') { conflict = true; editor.updateOptions({ readOnly: true }); applyMask() }
+  if (message.type === 'conflict') { encryptedHover?.hide(); conflict = true; editor.updateOptions({ readOnly: true }); applyMask() }
 })
 toggle.addEventListener('click', toggleMask)
 document.addEventListener('visibilitychange', conceal)

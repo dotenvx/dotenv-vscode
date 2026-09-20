@@ -1,4 +1,4 @@
-/* global getComputedStyle, requestAnimationFrame */
+/* global getComputedStyle, requestAnimationFrame, KeyboardEvent */
 import { bridge } from './setup.js'
 import { sourceEditor } from '../../media/editor/main.js'
 import * as monaco from 'monaco-editor/editor/editor.api.js'
@@ -35,6 +35,22 @@ async function run () {
     await wait(50)
   }
   if (!sourceEditor) throw new Error('Editor did not load')
+  const encryptedModel = sourceEditor.getModel()
+  const encryptedText = encryptedModel.getValue()
+  sourceEditor.setPosition(encryptedModel.getPositionAt(encryptedText.indexOf('encrypted:') + 2))
+  await sourceEditor.getAction('dotenv.decryptValue').run()
+  const popup = document.querySelector('.dotenv-decrypt-hover')
+  const decryptButton = popup.querySelector('button')
+  if (decryptButton.textContent !== 'Decrypt value' || !popup.textContent.includes('.env.renderer')) throw new Error('Encrypted hover missing action or filename')
+  if (popup.textContent.includes('DECRYPTED_UI')) throw new Error('Decrypted before clicking')
+  decryptButton.click()
+  for (let i = 0; i < 100 && decryptButton.textContent !== 'Hide value'; i++) await wait(25)
+  if (!popup.textContent.includes('<script>DECRYPTED_UI</script>') || popup.querySelector('script')) throw new Error('Decryption must render as plain text')
+  if (encryptedModel.getValue() !== encryptedText) throw new Error('Decryption changed file contents')
+  decryptButton.click()
+  if (popup.textContent.includes('DECRYPTED_UI') || decryptButton.textContent !== 'Decrypt value') throw new Error('Hide did not clear plaintext')
+  // Closing the popup on Escape also clears its content.
+  popup.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
   for (const [value, numeric] of [['3000', true], ['-0.5', true], ['+1_000.25', true], ['42 # comment', true], ['127.0.0.1', false], ['abc123', false], ['12px', false], ['"123"', false], ['1.2.3', false], ['1_', false]]) {
     const tokens = monaco.editor.tokenize(`KEY=${value}`, 'dotenv')[0]
     if (tokens.some(token => token.type === 'number.dotenv') !== numeric) throw new Error(`Incorrect number highlighting: ${value}`)

@@ -67,6 +67,14 @@ Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and y
 The hover shows the source file for each value. Click **Reveal value** or **Hide value** to toggle that value without
 changing your secret-peeking setting. Fresh hovers use your configured setting.
 
+In the Dotenv Editor, hover over an `encrypted:` value and click **Decrypt value**
+to view its plaintext without changing the file. **Hide value**, leaving the popup,
+or switching tabs clears the displayed plaintext. This requires a saved file, a
+trusted workspace, and the dotenvx CLI with the matching private key available
+locally (for example in `.env.keys` or the dotenvx key store). Set
+`dotenv.dotenvxPath` if the executable is not on your PATH. A key stored only in
+GitHub Actions is not available to the local editor.
+
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664141169/secret-peeking_byzwex.gif"/>
 
 Works across the same languages as auto-completion.

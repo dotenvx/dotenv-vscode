@@ -8,3 +8,7 @@ button:focus-visible { outline: 1px solid var(--vscode-focusBorder); }
 #editor.preparing { visibility: hidden !important; }
 .monaco-editor .view-line .dotenv-mask { color: transparent !important; background: var(--vscode-editor-foreground) !important; forced-color-adjust: none; }
 .monaco-editor .view-line .dotenv-mask::selection { color: transparent !important; }
+.dotenv-decrypt-hover { padding: 10px 12px; max-width: 420px; border: 1px solid var(--vscode-editorHoverWidget-border); border-radius: 5px; background: var(--vscode-editorHoverWidget-background); color: var(--vscode-editorHoverWidget-foreground); box-shadow: 0 2px 8px var(--vscode-widget-shadow); font: 13px var(--vscode-font-family); }
+.dotenv-decrypt-value { margin: 12px 0; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto; user-select: text; }
+.dotenv-decrypt-hover button { color: var(--vscode-textLink-foreground); }
+.dotenv-decrypt-hover button:disabled { opacity: 0.6; cursor: default; }

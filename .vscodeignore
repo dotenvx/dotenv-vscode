@@ -14,5 +14,6 @@ vsc-extension-quickstart.md
 !.env.example
 scripts/**
 media/editor/main.js
+media/editor/decrypt-hover.js
 media/editor/dist/test-renderer.js
 media/editor/dist/test-renderer.css
