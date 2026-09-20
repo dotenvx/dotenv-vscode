@@ -5,3 +5,6 @@ node_modules
 .DS_Store
 
 media/editor/dist/
+
+.env.keys
+.env.keys.*

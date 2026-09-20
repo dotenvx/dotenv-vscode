@@ -92,25 +92,39 @@ jobs:
           NODE
       - run: npm ci
       - run: npm run package
+      - name: Install dotenvx
+        run: npm install --global @dotenvx/dotenvx@2.28.2
       - name: Publish to Visual Studio Marketplace
         if: matrix.registry == 'marketplace'
         env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          DOTENV_PRIVATE_KEY_CI: ${{ secrets.DOTENV_PRIVATE_KEY_CI }}
         run: |
-          if [ -z "$VSCE_PAT" ]; then
-            echo 'Add the VSCE_PAT repository secret before publishing.' >&2
+          if [ -z "$DOTENV_PRIVATE_KEY_CI" ]; then
+            echo 'Add the DOTENV_PRIVATE_KEY_CI repository secret before publishing.' >&2
+            exit 1
+          fi
+          dotenvx run --strict --redact -f .env.ci -- bash -euo pipefail <<'PUBLISH'
+          if [ -z "${VSCE_PAT:-}" ]; then
+            echo 'Set VSCE_PAT in the encrypted .env.ci file before publishing.' >&2
             exit 1
           fi
           version=$(node -p "require('./package.json').version")
           npx --no-install vsce publish --packagePath "dotenv-vscode-${version}.vsix"
+          PUBLISH
       - name: Publish to Open VSX
         if: matrix.registry == 'open-vsx'
         env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          DOTENV_PRIVATE_KEY_CI: ${{ secrets.DOTENV_PRIVATE_KEY_CI }}
         run: |
-          if [ -z "$OVSX_PAT" ]; then
-            echo 'Add the OVSX_PAT repository secret before publishing.' >&2
+          if [ -z "$DOTENV_PRIVATE_KEY_CI" ]; then
+            echo 'Add the DOTENV_PRIVATE_KEY_CI repository secret before publishing.' >&2
+            exit 1
+          fi
+          dotenvx run --strict --redact -f .env.ci -- bash -euo pipefail <<'PUBLISH'
+          if [ -z "${OVSX_PAT:-}" ]; then
+            echo 'Set OVSX_PAT in the encrypted .env.ci file before publishing.' >&2
             exit 1
           fi
           version=$(node -p "require('./package.json').version")
           npx --no-install ovsx publish "dotenv-vscode-${version}.vsix" --registryUrl https://open-vsx.org
+          PUBLISH
