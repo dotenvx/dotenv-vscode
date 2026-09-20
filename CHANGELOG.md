@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.3.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.4.0...master)
+
+## [1.4.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.3.0...v1.4.0) (2026-09-20)
+
+### Added
+
+* Add convenient 'reveal' link on pop-out when hovering env key ([#136](https://github.com/dotenvx/dotenv-vscode/pull/136))
 
 ## [1.3.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.1...v1.3.0) (2026-09-20)
 
