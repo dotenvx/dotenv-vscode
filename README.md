@@ -195,6 +195,10 @@ with Dotenv are also included in completion and secret-peeking discovery.
 <details>
 <summary>Editor behavior and cloaking</summary>
 
+Autocomplete values start masked. Open a suggestion’s details and click **Reveal value**
+to reveal only that source’s value in the popup; click **Hide value** to mask it again.
+The suggestion row stays masked. This does not change the secret-peeking setting for hover.
+
 Dotenv files open in a Monaco source editor: the same editor component used by VS
 Code, with line numbers, multiple cursors, find/replace, folding, comments, and
 normal text editing. Values are masked before the editor becomes visible and the

@@ -43,8 +43,8 @@ describe('dotenv discovery through language providers', () => {
       const item = completions.items.find(item => item.label.label === 'DISCOVERY_KEY')
       assert(item.label.description.includes('.env.local'))
       assert(item.label.description.includes('.env.production'))
-      assert(item.documentation.value.includes('localvalue'))
-      assert(item.documentation.value.includes('productionvalue'))
+      assert(!item.documentation.value.includes('localvalue'))
+      assert(!item.documentation.value.includes('productionvalue'))
       const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(1, reference.indexOf('DISCOVERY_KEY') + 2))
       const content = hovers.flatMap(hover => hover.contents).map(value => value.value || value).join('\n')
       assert(content.includes('localvalue'))
@@ -66,11 +66,37 @@ describe('dotenv discovery through language providers', () => {
       for (const content of [item.documentation.value, hover.value]) {
         assert(!content.includes('localvalue'))
         assert(!content.includes('productionvalue'))
+        assert(!content.replace(/\[.*?\]\(command:[^)]*\)/g, '').includes('ue'), 'Must not reveal the last two characters')
         assert(content.includes('█'))
         assert(content.includes('.env.local'))
       }
     } finally {
       settings.secretpeekingEnabled = original
+    }
+  })
+
+  it('fully masks short and long values in completion labels, documentation and hover', async () => {
+    const originalPeeking = settings.secretpeekingEnabled
+    const originalIcon = settings.cloakIcon
+    try {
+      settings.secretpeekingEnabled = () => false
+      settings.cloakIcon = () => '█'
+      const uri = await write('app/src/full-mask.js', 'process.env.')
+      const document = await vscode.workspace.openTextDocument(uri)
+      for (const value of ['x', 'xy', 'World', '🌴secret']) {
+        await write('app/.env.mask-test', `MASK_TEST=${value}\n`)
+        const item = helpers.autocomplete('.', document, new vscode.Position(0, 12)).find(item => item.label.label === 'MASK_TEST')
+        const mask = '█'.repeat(value.length)
+        assert.strictEqual(item.label.detail, ` ${mask}`)
+        assert(item.documentation.value.includes(mask))
+        assert(!item.documentation.value.replace(/\[.*?\]\(command:[^)]*\)/g, '').includes(value.slice(-2)))
+        assert.strictEqual(helpers.valueHover('MASK_TEST', document).contents[0], mask)
+      }
+      settings.secretpeekingEnabled = () => true
+      assert.strictEqual(helpers.valueHover('MASK_TEST', document).contents[0], '🌴secret')
+    } finally {
+      settings.secretpeekingEnabled = originalPeeking
+      settings.cloakIcon = originalIcon
     }
   })
 
@@ -83,9 +109,9 @@ describe('dotenv discovery through language providers', () => {
     const code = await vscode.workspace.openTextDocument(vscode.Uri.joinPath(root, 'app/src/index.js'))
     const item = helpers.autocomplete('.', code, new vscode.Position(0, 12)).find(item => item.label.label === 'UNSAVED_KEY')
     assert(item)
-    assert(!item.documentation.isTrusted)
+    assert.deepStrictEqual(item.documentation.isTrusted, { enabledCommands: ['dotenv.toggleCompletionValue'] })
     assert(!item.documentation.supportHtml)
-    assert(item.documentation.value.includes('\\[click\\]'))
+    assert(!item.documentation.value.includes('command:evil'))
     assert(!helpers.envValues(code).has('ONLY_LOCAL'))
     // Revert this disposable fixture so it doesn't leave a dirty editor behind.
     await vscode.window.showTextDocument(document)
