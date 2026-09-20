@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.0...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.1...master)
+
+## [1.2.1](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.0...v1.2.1) (2026-09-19)
+
+### Changed
+
+* Mask full value rather than partial on hover ([#133](https://github.com/dotenvx/dotenv-vscode/pull/133))
 
 ## [1.2.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.1.0...v1.2.0) (2026-09-19)
 
