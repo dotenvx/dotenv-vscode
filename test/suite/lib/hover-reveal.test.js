@@ -59,17 +59,22 @@ describe('hover popup reveal', () => {
   it('shows and hides a masked value without changing settings or fresh hovers', async () => {
     const f = fixture()
     const masked = f.hover()
-    assert.strictEqual(masked.contents[0], '██████')
-    assert(masked.contents[1].value.includes('Show value'))
+    assert(masked.contents[0].value.startsWith('.env\n\n'))
+    assert(!masked.contents[0].value.includes('SECRET'))
+    assert(masked.contents[0].value.includes('██████'))
+    assert(masked.contents[1].value.includes('Reveal value'))
     assert(!masked.contents[1].value.includes('SECRET'))
     const shown = await f.click(f.token(masked))
-    assert.strictEqual(shown.contents[0], 'SECRET')
+    assert(shown.contents[0].value.startsWith('.env\n\n'))
+    assert(shown.contents[0].value.includes('SECRET'))
     assert(shown.contents[1].value.includes('Hide value'))
     assert(f.editor.selection.active.isEqual(f.range.start))
     const hidden = await f.click(f.token(shown))
-    assert.strictEqual(hidden.contents[0], '██████')
+    assert(hidden.contents[0].value.startsWith('.env\n\n'))
+    assert(!hidden.contents[0].value.includes('SECRET'))
+    assert(hidden.contents[0].value.includes('██████'))
     assert.strictEqual(f.settings.secretpeekingEnabled(), false)
-    assert.strictEqual(f.hover().contents[0], '██████')
+    assert(f.hover().contents[0].value.includes('██████'))
     assert.strictEqual(hidden.contents[1].isTrusted.enabledCommands[0], 'dotenv.toggleHoverValue')
     assert.strictEqual(hidden.contents[1].isTrusted.enabledCommands.length, 1)
   })
@@ -77,9 +82,21 @@ describe('hover popup reveal', () => {
   it('can hide values when peeking is enabled', async () => {
     const f = fixture(true)
     const hidden = await f.click(f.token(f.hover()))
-    assert.strictEqual(hidden.contents[0], '██████')
-    assert.strictEqual(f.hover().contents[0], 'SECRET')
+    assert(hidden.contents[0].value.includes('██████'))
+    assert(f.hover().contents[0].value.includes('SECRET'))
     assert.strictEqual(f.settings.secretpeekingEnabled(), true)
+  })
+
+  it('shows every source even when files contain the same value', () => {
+    const f = fixture()
+    f.helpers.envValues = () => new Map([['HELLO', [
+      { source: '.env', value: 'SECRET' },
+      { source: '.env.local', value: 'SECRET' }
+    ]]])
+    const content = f.hover().contents[0].value
+    assert(content.includes('.env\n\n'))
+    assert(content.includes('.env.local\n\n'))
+    assert(!content.includes('SECRET'))
   })
 
   it('ignores unknown, reused, edited-document, and other-file links', async () => {
@@ -107,7 +124,7 @@ describe('hover popup reveal', () => {
   })
 })
 
-it('refreshes the real VS Code hover after clicking Show value and Hide value', async function () {
+it('refreshes the real VS Code hover after clicking Reveal value and Hide value', async function () {
   this.timeout(10000)
   const helpers = require('../../../lib/helpers')
   const settings = require('../../../lib/settings')
@@ -139,7 +156,7 @@ it('refreshes the real VS Code hover after clicking Show value and Hide value', 
         await new Promise(resolve => setTimeout(resolve, 25))
       }
       assert(latest, 'The command should request a new hover from the provider')
-      assert.strictEqual(latest.contents[0], expected)
+      assert(latest.contents[0].value.includes(expected))
       current = latest
     }
   } finally {

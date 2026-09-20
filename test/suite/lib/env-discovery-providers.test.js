@@ -104,10 +104,10 @@ describe('dotenv discovery through language providers', () => {
         assert.strictEqual(item.label.detail, ` ${mask}`)
         assert(item.documentation.value.includes(mask))
         assert(!item.documentation.value.replace(/\[.*?\]\(command:[^)]*\)/g, '').includes(value.slice(-2)))
-        assert.strictEqual(helpers.valueHover('MASK_TEST', document).contents[0], mask)
+        assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes(mask))
       }
       settings.secretpeekingEnabled = () => true
-      assert.strictEqual(helpers.valueHover('MASK_TEST', document).contents[0], '🌴secret')
+      assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes('🌴secret'))
     } finally {
       settings.secretpeekingEnabled = originalPeeking
       settings.cloakIcon = originalIcon

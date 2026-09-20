@@ -64,7 +64,7 @@ such as `import { env as environment } from 'node:process'`.
 
 Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and you will be able to peek at its value without having to open your .env file. Convenient!
 
-Click **Show value** or **Hide value** in the hover to toggle that value without
+The hover shows the source file for each value. Click **Reveal value** or **Hide value** to toggle that value without
 changing your secret-peeking setting. Fresh hovers use your configured setting.
 
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664141169/secret-peeking_byzwex.gif"/>
