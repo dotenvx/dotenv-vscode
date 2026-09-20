@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.1...master)
+## [Unreleased](https://github.com/dotenv-org/dotenv-vscode/compare/v1.3.0...master)
+
+## [1.3.0](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.1...v1.3.0) (2026-09-20)
+
+### Added
+
+* Add support for `import { env } from 'node:process'` with autocomplete and secret peeking. ([#135](https://github.com/dotenvx/dotenv-vscode/pull/135))
 
 ## [1.2.1](https://github.com/dotenv-org/dotenv-vscode/compare/v1.2.0...v1.2.1) (2026-09-19)
 

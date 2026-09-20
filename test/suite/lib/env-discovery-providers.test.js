@@ -55,6 +55,20 @@ describe('dotenv discovery through language providers', () => {
     })
   }
 
+  for (const extension of ['js', 'ts', 'jsx', 'tsx']) {
+    it(`completes and peeks at imported env through registered ${extension} providers`, async () => {
+      const uri = await write(`app/src/imported.${extension}`, "import { env } from 'node:process'\nenv.\nenv.DISCOVERY_KEY")
+      const completions = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', uri, new vscode.Position(1, 4))
+      const item = completions.items.find(item => item.label.label === 'DISCOVERY_KEY')
+      assert(item)
+      assert(!item.documentation.value.includes('localvalue'))
+      const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(2, 8))
+      const content = hovers.flatMap(hover => hover.contents).map(value => value.value || value).join('\n')
+      assert(content.includes('localvalue'))
+      assert(content.includes('productionvalue'))
+    })
+  }
+
   it('masks every conflicting value when secret peeking is disabled', async () => {
     const original = settings.secretpeekingEnabled
     try {

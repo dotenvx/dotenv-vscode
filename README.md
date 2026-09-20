@@ -56,6 +56,10 @@ variables from your dotenv files.
 
 Supports JavaScript, TypeScript, Python, Ruby, Go, and more. See [Advanced](#advanced) for language details.
 
+JavaScript and TypeScript also support completion and secret peeking for `env.KEY`
+after `import { env } from 'node:process'` (or `'process'`), including named aliases
+such as `import { env as environment } from 'node:process'`.
+
 ### In-code secret peeking
 
 Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and you will be able to peek at its value without having to open your .env file. Convenient!
