@@ -117,7 +117,7 @@ describe('Dotenv editor commands', () => {
     const extension = vscode.extensions.getExtension('dotenv.dotenv-vscode')
     await extension.activate()
     const commands = await vscode.commands.getCommands(true)
-    assert.deepStrictEqual(commands.filter(command => command.startsWith('dotenv.')).sort(), ['dotenv.toggleAutocloaking', 'dotenv.toggleCompletionValue'])
+    assert.deepStrictEqual(commands.filter(command => command.startsWith('dotenv.')).sort(), ['dotenv.toggleAutocloaking', 'dotenv.toggleCompletionValue', 'dotenv.toggleHoverValue'])
     assert.strictEqual(extension.packageJSON.displayName, 'Dotenv Official')
     assert.strictEqual(extension.packageJSON.contributes.views, undefined)
     assert.strictEqual(extension.packageJSON.contributes.viewsContainers, undefined)

@@ -38,6 +38,7 @@ function fixture () {
   const helpers = load('helpers.js', {
     vscode: fakeVscode,
     './completion-reveal': reveal,
+    './hover-reveal': require('../../../lib/hover-reveal'),
     './settings': settings,
     './env-files': {
       read: () => [
