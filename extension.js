@@ -3,9 +3,11 @@ const autocloaking = require('./lib/autocloaking')
 const autocompletion = require('./lib/autocompletion')
 const peeking = require('./lib/peeking')
 const completionReveal = require('./lib/completion-reveal')
+const hoverReveal = require('./lib/hover-reveal')
 
 async function activate (context) {
   completionReveal.run(context)
+  hoverReveal.run(context)
   secureEditor.run(context)
   console.log('Dotenv is active')
 
