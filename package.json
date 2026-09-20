@@ -27,6 +27,12 @@
       "type": "object",
       "title": "Dotenv Official",
       "properties": {
+        "dotenv.dotenvxPath": {
+          "scope": "machine-overridable",
+          "type": "string",
+          "default": "dotenvx",
+          "description": "Path to the dotenvx executable used to decrypt values in the Dotenv Editor."
+        },
         "dotenv.enableAutocloaking": {
           "scope": "resource",
           "type": "boolean",

@@ -4,13 +4,14 @@ const vscode = require('vscode')
 const path = require('path')
 const esbuild = require('esbuild')
 const provider = require('../../../lib/secure-editor')
+const decryption = require('../../../lib/decrypt-value')
 describe('Monaco renderer integration', () => {
   it('masks every observed animation frame on load, typing and tab switches', async function () {
     this.timeout(30000)
     const root = path.resolve(__dirname, '../../..')
     esbuild.buildSync({ entryPoints: [path.join(root, 'test/renderer/main.js')], bundle: true, outfile: path.join(root, 'media/editor/dist/test-renderer.js'), format: 'iife', platform: 'browser', loader: { '.ttf': 'file' }, logLevel: 'silent' })
     const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, '.env.renderer')
-    await vscode.workspace.fs.writeFile(uri, Buffer.from('KEY=SECRET_INITIAL\nMULTI="SECRET_FIRST\nSECRET_SECOND"\n# COMMENTED=SECRET_COMMENT\n'))
+    await vscode.workspace.fs.writeFile(uri, Buffer.from('KEY=SECRET_INITIAL\nMULTI="SECRET_FIRST\nSECRET_SECOND"\n# COMMENTED=SECRET_COMMENT\nENCRYPTED="encrypted:renderer-fixture"\n'))
     const document = await vscode.workspace.openTextDocument(uri)
     const panel = vscode.window.createWebviewPanel('dotenv.rendererTest', 'Dotenv renderer test', vscode.ViewColumn.One, { enableScripts: true, retainContextWhenHidden: true })
     let onReady
@@ -25,6 +26,8 @@ describe('Monaco renderer integration', () => {
       if (message.type === 'rendererResult') onResult(message)
       if (message.type === 'rendererError') { onReady(); onError(new Error(message.error)) }
     })
+    const originalDecrypt = decryption.decrypt
+    decryption.decrypt = async () => '<script>DECRYPTED_UI</script>'
     try {
       provider.resolveCustomTextEditor(document, panel, { extensionUri: vscode.Uri.file(root) })
       panel.webview.html = panel.webview.html.replace(/dist\/main.js/g, 'dist/test-renderer.js')
@@ -48,6 +51,6 @@ describe('Monaco renderer integration', () => {
       assert.deepStrictEqual(checked.failures, [])
       assert(document.getText().includes('NEXT_9=SECRET_TYPED_9'))
       await document.save()
-    } finally { listener.dispose(); panel.dispose() }
+    } finally { decryption.decrypt = originalDecrypt; listener.dispose(); panel.dispose() }
   })
 })
