@@ -1,6 +1,6 @@
-![dotenvx](https://dotenvx.com/banner.png)
+![dotenv](https://dotenvx.com/assets/img/logo-env-yellow.svg)
 
-*official secure dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
+*official dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
 
 * auto-cloaking
 * auto-completion
