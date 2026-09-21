@@ -1,4 +1,4 @@
-# dotenv-vscode
+<h1>dotenv-vscode <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a></h1>
 
 <img src="https://dotenvx.com/logo-original.png" alt="dotenv" align="right" width="200" />
 
