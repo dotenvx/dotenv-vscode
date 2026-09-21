@@ -1,7 +1,7 @@
 {
   "name": "dotenv-vscode",
   "displayName": "Dotenv Official",
-  "description": "Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking for .env files.",
+  "description": "official dotenv extension for vscode—from the creator of dotenv.",
   "author": "Mot @motdotla",
   "version": "1.5.0",
   "license": "MIT",
