@@ -13,14 +13,22 @@
 > auto-cloaking
 <img src="https://github.com/user-attachments/assets/53d25529-ab04-4c5d-8a74-ae6cb39b93cf">
 
+&nbsp;
+
 > auto-completion
 <img src="https://github.com/user-attachments/assets/ad2b730e-d32f-4573-acd8-f7491bf48e25"/>
+
+&nbsp;
 
 > secret peeking
 <img src="https://github.com/user-attachments/assets/f4441d8d-8765-4849-b947-6ce36412ca03"/>
 
+&nbsp;
+
 > syntax highlighting
 <img src="https://github.com/user-attachments/assets/f276e078-c60e-4cb2-9664-f6750d8387c9"/>
+
+&nbsp;
 
 > decryption peeking
 <img src="https://github.com/user-attachments/assets/ba5ec15b-1be8-40b1-902d-116fdbf81591"/>
