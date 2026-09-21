@@ -1,26 +1,14 @@
-<div align="center">
-  <table>
-    <tr>
-      <td>
-        <a href="https://res.cloudinary.com/dotenv-org/image/upload/v1679528507/dotenv-vscode-autocloaking_kpr0ly.png"><img src="https://res.cloudinary.com/dotenv-org/image/upload/v1679528507/dotenv-vscode-autocloaking_kpr0ly.png"/></a>
-      </td>
-      <td>
-        <a href="https://res.cloudinary.com/dotenv-org/image/upload/v1679528507/dotenv-vscode-autocompletion_rqlanf.png"><img src="https://res.cloudinary.com/dotenv-org/image/upload/v1679528507/dotenv-vscode-autocompletion_rqlanf.png"/></a>
-      </td>
-      <td>
-        <a href="https://res.cloudinary.com/dotenv-org/image/upload/v1679528506/dotenv-vscode-secretpeeking_byznii.png"><img src="https://res.cloudinary.com/dotenv-org/image/upload/v1679528506/dotenv-vscode-secretpeeking_byznii.png"/></a>
-      </td>
-    </tr>
-  </table>
-</div>
+*official dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
 
-# Dotenv Official
+* syntax highlighting 
+* auto-cloaking
+* auto-completion
+* in-code secret peeking
+* decryption peeking (if using dotenvx)
 
-#### Syntax highlighting, auto-cloaking, auto-completion, and in-code secret peeking.
+&nbsp;
 
-<a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
-
-## Usage
+<h3>Quickstart <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a></h3>
 
 ### Syntax Highlighting
 
