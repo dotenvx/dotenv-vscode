@@ -395,6 +395,7 @@ Set `dotenv.yamlSections` to replace the defaults, or use `[]` to disable YAML c
 ## Related Tools
 
 * [Load environment variables from a .env file](https://github.com/motdotla/dotenv)
+* [Expand environment variables with dotenv-expand](https://github.com/motdotla/dotenv-expand)
 * [Encrypt your .env files with dotenvx](https://github.com/dotenvx/dotenvx)
 
 &nbsp;
