@@ -11,19 +11,19 @@
 &nbsp;
 
 > auto-cloaking
-<img src="https://github.com/user-attachments/assets/548cfc4c-61e5-4398-be4b-19fcce9f64c7">
+<img src="https://github.com/user-attachments/assets/53d25529-ab04-4c5d-8a74-ae6cb39b93cf">
 
 > auto-completion
-<img src="https://github.com/user-attachments/assets/13af2013-486d-4951-bcd1-d533e6c7231d"/>
+<img src="https://github.com/user-attachments/assets/ad2b730e-d32f-4573-acd8-f7491bf48e25"/>
 
 > secret peeking
-<img src="https://github.com/user-attachments/assets/d0211521-594c-46ca-839c-89291a42e244"/>
+<img src="https://github.com/user-attachments/assets/f4441d8d-8765-4849-b947-6ce36412ca03"/>
 
 > syntax highlighting
-<img src="https://github.com/user-attachments/assets/0358e6d9-a3d1-4524-8225-45046cd6fb83"/>
+<img src="https://github.com/user-attachments/assets/f276e078-c60e-4cb2-9664-f6750d8387c9"/>
 
 > decryption peeking
-<img src="https://github.com/user-attachments/assets/3bc33a20-fc49-4050-98a1-7c0bc3174a5c"/>
+<img src="https://github.com/user-attachments/assets/ba5ec15b-1be8-40b1-902d-116fdbf81591"/>
 
 &nbsp;
 
