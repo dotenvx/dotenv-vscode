@@ -16,6 +16,9 @@
 > auto-completion
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140944/autocomplete_snic6t.gif"/>
 
+> secret peeking
+<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664141169/secret-peeking_byzwex.gif"/>
+
 &nbsp;
 
 ## Auto-cloaking
@@ -64,7 +67,6 @@ locally (for example in `.env.keys` or the dotenvx key store). Set
 `dotenv.dotenvxPath` if the executable is not on your PATH. A key stored only in
 GitHub Actions is not available to the local editor.
 
-<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664141169/secret-peeking_byzwex.gif"/>
 
 Works across the same languages as auto-completion.
 
