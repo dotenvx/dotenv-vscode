@@ -8,13 +8,13 @@
 
 &nbsp;
 
-<h3>Quickstart <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a></h3>
+### Quickstart
 
-### Syntax Highlighting
+Install the extension: <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
 
-It just works. Open your `.env` files in VSCode, and they will now be syntax highlighted.
+## Syntax Higlighting 
 
-### Auto-cloaking
+## Auto-cloaking
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
 
@@ -35,7 +35,7 @@ Supported files:
 You can also run `Dotenv: Toggle auto-cloaking` from the Command Palette, or use the toggle
 above a dotenv file, to show or hide its values.
 
-### Auto-completion
+## Auto-completion
 
 Start typing `process.env.` (or a language-specific environment statement) to see
 variables from your dotenv files.
@@ -48,7 +48,7 @@ JavaScript and TypeScript also support completion and secret peeking for `env.KE
 after `import { env } from 'node:process'` (or `'process'`), including named aliases
 such as `import { env as environment } from 'node:process'`.
 
-### In-code secret peeking
+## In-code secret peeking
 
 Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and you will be able to peek at its value without having to open your .env file. Convenient!
 
