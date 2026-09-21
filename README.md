@@ -102,7 +102,9 @@ The file stays encrypted.
 Click **Hide value**, leave the popup, or switch tabs to clear the displayed plaintext.
 
 You'll need a saved file, a trusted workspace, and the dotenvx CLI installed
-locally.
+locally. The CLI isn't bundled with this extension.
+
+Install it using the [dotenvx installation instructions](https://dotenvx.com/install).
 
 dotenvx finds the matching private key through its usual lookup, such as
 `.env.keys` or its key store. A key stored only in GitHub Actions isn't available locally.

@@ -111,13 +111,13 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Changed
 
-* Improved environment variable capture [#96](https://github.com/dotenv-org/dotenv-vscode/pull/96)
+* Improved environment variable capture [#96](https://github.com/dotenvx/dotenv-vscode/pull/96)
 
 ## [0.27.2](https://github.com/dotenvx/dotenv-vscode/compare/v0.27.1...v0.27.2) (2023-06-15)
 
 ### Added
 
-* For autocompletion, respect secret peeking setting off or on [#97](https://github.com/dotenv-org/dotenv-vscode/pull/97)
+* For autocompletion, respect secret peeking setting off or on [#97](https://github.com/dotenvx/dotenv-vscode/pull/97)
 
 ## [0.27.1](https://github.com/dotenvx/dotenv-vscode/compare/v0.27.0...v0.27.1) (2023-06-15)
 
@@ -129,13 +129,13 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Added
 
-* Write to `settings.json` with `files.associations` to make sure `.env` files do not get the properties association. [#77](https://github.com/dotenv-org/dotenv-vscode/issues/77)
+* Write to `settings.json` with `files.associations` to make sure `.env` files do not get the properties association. [#77](https://github.com/dotenvx/dotenv-vscode/issues/77)
 
 ## 0.26.0
 
 ### Added
 
-* Add setting to turn off in-code secret peeking. [#95](https://github.com/dotenv-org/dotenv-vscode/pull/95)
+* Add setting to turn off in-code secret peeking. [#95](https://github.com/dotenvx/dotenv-vscode/pull/95)
 
 ## 0.25.0
 
@@ -147,7 +147,7 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Changed
 
-* 🐞 Fix `textMateRules` setting when not present in user machine `settings.json` file. [#94](https://github.com/dotenv-org/dotenv-vscode/pull/94)
+* 🐞 Fix `textMateRules` setting when not present in user machine `settings.json` file. [#94](https://github.com/dotenvx/dotenv-vscode/pull/94)
 
 ## 0.24.2
 
@@ -159,45 +159,45 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Fixed
 
-* Reverted code causing autocloaking to fail [#93](https://github.com/dotenv-org/dotenv-vscode/pull/93)
+* Reverted code causing autocloaking to fail [#93](https://github.com/dotenvx/dotenv-vscode/pull/93)
 
 ## 0.24.0
 
 ### Added
 
-* Added `import.meta.env` format for javascript highlighting/autocomplete [#88](https://github.com/dotenv-org/dotenv-vscode/pull/88)
+* Added `import.meta.env` format for javascript highlighting/autocomplete [#88](https://github.com/dotenvx/dotenv-vscode/pull/88)
 
 ### Fixed
 
-* Issue where values wouldn't unhide after being autocloaked [#85](https://github.com/dotenv-org/dotenv-vscode/issues/85) [#86](https://github.com/dotenv-org/dotenv-vscode/issues/86) [#87](https://github.com/dotenv-org/dotenv-vscode/pull/87)
+* Issue where values wouldn't unhide after being autocloaked [#85](https://github.com/dotenvx/dotenv-vscode/issues/85) [#86](https://github.com/dotenvx/dotenv-vscode/issues/86) [#87](https://github.com/dotenvx/dotenv-vscode/pull/87)
 
 ## 0.23.0
 
 ### Added
 
-* Added autocomplete and hover support for elixir. [#48](https://github.com/dotenv-org/dotenv-vscode/issues/48)
+* Added autocomplete and hover support for elixir. [#48](https://github.com/dotenvx/dotenv-vscode/issues/48)
 
 ### Fixed
 
-* Issue where autocloaking would overwrite other tokenColorCustomization settings resolved [#79](https://github.com/dotenv-org/dotenv-vscode/issues/79)
+* Issue where autocloaking would overwrite other tokenColorCustomization settings resolved [#79](https://github.com/dotenvx/dotenv-vscode/issues/79)
 
 ## 0.22.0
 
 ### Added
 
-* [#78](https://github.com/dotenv-org/dotenv-vscode/pull/78)
+* [#78](https://github.com/dotenvx/dotenv-vscode/pull/78)
 * Added autocomplete and hover support for dart.
 * Added autocomplete and hover support for kotlin.
 * Added .env.fat to list of files that will automatically be configured for dotEnv syntax highlighting.
 
 ### Fixed
-* Issue where creating a new file and selecting javascript/ruby/python/php language but highlithing would be in .env style resolved. [#66](https://github.com/dotenv-org/dotenv-vscode/issues/66), [#63](https://github.com/dotenv-org/dotenv-vscode/issues/63)
+* Issue where creating a new file and selecting javascript/ruby/python/php language but highlithing would be in .env style resolved. [#66](https://github.com/dotenvx/dotenv-vscode/issues/66), [#63](https://github.com/dotenvx/dotenv-vscode/issues/63)
 
 ## 0.21.0
 
 ### Changed
 
-* [#74](https://github.com/dotenv-org/dotenv-vscode/pull/74)
+* [#74](https://github.com/dotenvx/dotenv-vscode/pull/74)
 * Improved syntax highlighting for .env files
 * Added more .env extensions that should auto-change the vscode langauge identifier to dotenv
 
@@ -205,35 +205,35 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Added
 
-* Added suport for `var_os` in Rust [#71](https://github.com/dotenv-org/dotenv-vscode/pull/71)
+* Added suport for `var_os` in Rust [#71](https://github.com/dotenvx/dotenv-vscode/pull/71)
 
 ## 0.19.0
 
 ### Removed
 
-* Remove support for .NET dotenv lib [#61](https://github.com/dotenv-org/dotenv-vscode/pull/61)
+* Remove support for .NET dotenv lib [#61](https://github.com/dotenvx/dotenv-vscode/pull/61)
 
 ## 0.18.0
 
-* Added support for rust [#64](https://github.com/dotenv-org/dotenv-vscode/pull/64)
+* Added support for rust [#64](https://github.com/dotenvx/dotenv-vscode/pull/64)
 
 ## 0.17.0
 
 ### Added
 
-* Added support for .NET dotenv lib [#61](https://github.com/dotenv-org/dotenv-vscode/pull/61)
+* Added support for .NET dotenv lib [#61](https://github.com/dotenvx/dotenv-vscode/pull/61)
 
 ## 0.16.0
 
 ### Added
 
-* Added support for C# autocomplete and secret peeking[#59](https://github.com/dotenv-org/dotenv-vscode/pull/59)
+* Added support for C# autocomplete and secret peeking[#59](https://github.com/dotenvx/dotenv-vscode/pull/59)
 
 ## 0.15.0
 
 ### Added
 
-* Added support for Java autocomplete and secret peeking[#58](https://github.com/dotenv-org/dotenv-vscode/pull/58)
+* Added support for Java autocomplete and secret peeking[#58](https://github.com/dotenvx/dotenv-vscode/pull/58)
 
 ## 0.14.1
 
@@ -245,31 +245,31 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Added
 
-* Added support for Go autocomplete and secret peeking[#57](https://github.com/dotenv-org/dotenv-vscode/pull/57)
+* Added support for Go autocomplete and secret peeking[#57](https://github.com/dotenvx/dotenv-vscode/pull/57)
 
 ## 0.13.0
 
 ### Added
 
-* Added support for PHP autocomplete and secret peeking[#40](https://github.com/dotenv-org/dotenv-vscode/pull/40)
+* Added support for PHP autocomplete and secret peeking[#40](https://github.com/dotenvx/dotenv-vscode/pull/40)
 
 ## 0.12.0
 
 ### Added
 
-* Added support for Python autocomplete and secret peeking[#38](https://github.com/dotenv-org/dotenv-vscode/pull/38)
+* Added support for Python autocomplete and secret peeking[#38](https://github.com/dotenvx/dotenv-vscode/pull/38)
 
 ## 0.11.1
 
 ### Changed
 
-* Use workspacePath to load `.env` file [#37](https://github.com/dotenv-org/dotenv-vscode/pull/37)
+* Use workspacePath to load `.env` file [#37](https://github.com/dotenvx/dotenv-vscode/pull/37)
 
 ## 0.11.0
 
 ### Added
 
-* Added support for Ruby autocomplete [#35](https://github.com/dotenv-org/dotenv-vscode/pull/35)
+* Added support for Ruby autocomplete [#35](https://github.com/dotenvx/dotenv-vscode/pull/35)
 
 ## 0.10.2
 
@@ -281,7 +281,7 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Changed
 
-* Place ENV completion items to top of list [#32](https://github.com/dotenv-org/dotenv-vscode/pull/32)
+* Place ENV completion items to top of list [#32](https://github.com/dotenvx/dotenv-vscode/pull/32)
 
 ## 0.10.0
 
@@ -309,13 +309,13 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Added
 
-* Added auto-cloaking toggle at top of .env file 🎉 ([24](https://github.com/dotenv-org/dotenv-vscode/pull/24))
+* Added auto-cloaking toggle at top of .env file 🎉 ([24](https://github.com/dotenvx/dotenv-vscode/pull/24))
 
 ## 0.7.1
 
 ### Changed
 
-* Fixed activation event in event of opening `.env` file first ([23](https://github.com/dotenv-org/dotenv-vscode/pull/23))
+* Fixed activation event in event of opening `.env` file first ([23](https://github.com/dotenvx/dotenv-vscode/pull/23))
 
 ## 0.7.0
 
