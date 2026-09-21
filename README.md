@@ -13,6 +13,11 @@
 > auto-cloaking
 <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140588/toggle_itemcq.gif">
 
+> auto-completion
+<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140944/autocomplete_snic6t.gif"/>
+
+&nbsp;
+
 ## Auto-cloaking
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
@@ -37,7 +42,6 @@ above a dotenv file, to show or hide its values.
 Start typing `process.env.` (or a language-specific environment statement) to see
 variables from your dotenv files.
 
-<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140944/autocomplete_snic6t.gif"/>
 
 Supports JavaScript, TypeScript, Python, Ruby, Go, and more. See [Advanced](#advanced) for language details.
 
