@@ -6,11 +6,9 @@
 * in-code secret peeking
 * decryption peeking (if using dotenvx)
 
+<a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
+
 &nbsp;
-
-### Quickstart
-
-Install the extension: <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
 
 ## Syntax Higlighting 
 
