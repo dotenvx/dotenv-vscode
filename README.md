@@ -1,22 +1,21 @@
 *official dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
 
-* syntax highlighting 
 * auto-cloaking
 * auto-completion
-* in-code secret peeking
+* secret peeking
+* syntax highlighting 
 * decryption peeking (if using dotenvx)
 
 <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
 
 &nbsp;
 
-## Syntax Higlighting 
+> auto-cloaking
+<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140588/toggle_itemcq.gif">
 
 ## Auto-cloaking
 
 It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
-
-<img src="https://res.cloudinary.com/dotenv-org/image/upload/v1664140588/toggle_itemcq.gif">
 
 Supported files:
 
