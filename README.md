@@ -1,4 +1,4 @@
-![dotenv](https://dotenvx.com/assets/img/logo-env-yellow.svg)
+<img src="https://dotenvx.com/logo-original.png" alt="dotenv" width="200" height="200">
 
 *official dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
 
