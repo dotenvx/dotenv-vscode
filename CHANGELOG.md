@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.1...master)
+## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.2...master)
+
+## [1.5.2](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.1...v1.5.2) (2026-09-20)
+
+### Changed
+
+* Fix README display on marketplace
 
 ## [1.5.1](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.0...v1.5.1) (2026-09-20)
 
