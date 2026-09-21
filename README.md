@@ -21,104 +21,133 @@
 
 &nbsp;
 
-## Auto-cloaking
-
-It just works. Open your `.env` files in VSCode, and they will be auto-cloaked. Click the 'Toggle auto-cloaking' link at the top of your `.env` file to toggle it off. Feel safer sharing your screen!
-
-Supported files:
-
-* .env
-* .env.example
-* .env.development
-* .env.staging
-* .env.production
-* .env.*
-* .flaskenv
-* docker-compose.yaml
-* docker-compose.yml
-
-You can also run `Dotenv: Toggle auto-cloaking` from the Command Palette, or use the toggle
-above a dotenv file, to show or hide its values.
-
-## Auto-completion
-
-Start typing `process.env.` (or a language-specific environment statement) to see
-variables from your dotenv files.
-
-
-Supports JavaScript, TypeScript, Python, Ruby, Go, and more. See [Advanced](#advanced) for language details.
-
-JavaScript and TypeScript also support completion and secret peeking for `env.KEY`
-after `import { env } from 'node:process'` (or `'process'`), including named aliases
-such as `import { env as environment } from 'node:process'`.
-
-## In-code secret peeking
-
-Hover your mouse over a `process.env.SECRET_KEY` or a `ENV["SECRET_KEY"]`, and you will be able to peek at its value without having to open your .env file. Convenient!
-
-The hover shows the source file for each value. Click **Reveal value** or **Hide value** to toggle that value without
-changing your secret-peeking setting. Fresh hovers use your configured setting.
-
-In the Dotenv Editor, hover over an `encrypted:` value and click **Decrypt value**
-to view its plaintext without changing the file. **Hide value**, leaving the popup,
-or switching tabs clears the displayed plaintext. This requires a saved file, a
-trusted workspace, and the dotenvx CLI with the matching private key available
-locally (for example in `.env.keys` or the dotenvx key store). Set
-`dotenv.dotenvxPath` if the executable is not on your PATH. A key stored only in
-GitHub Actions is not available to the local editor.
-
-
-Works across the same languages as auto-completion.
-
-&nbsp;
-
-## Advanced
+## FAQ
 
 <details>
-<summary>Supported languages and examples</summary>
+<summary>Does it automatically cloak my secrets?</summary>
 
-Auto-completion and secret peeking support:
+Yes. Open a `.env` file and its values start masked. Click **Toggle auto-cloaking**
+at the top of the file or run **Dotenv: Toggle auto-cloaking** from the Command
+Palette to reveal or hide them. Switching tabs hides them again in the Dotenv Editor.
 
-* JavaScript/TypeScript/NodeJS
-* Ruby
-* Python
-* PHP
-* Go
-* Java
-* .NET (C#, F#, Visual Basic)
-* C/C++
-* Julia
-* Erlang
-* Perl
-* Swift
-* Clojure
-* Rust
+</details>
 
-#### .NET
+<details>
+<summary>Does it support .env variants?</summary>
 
-Completion and hover support `Environment.GetEnvironmentVariable("NAME")` in C#,
-F#, and Visual Basic, including `System.Environment` calls and the overload with
-an `EnvironmentVariableTarget` argument. Type `(` or `"` in the first argument,
-or request completion while typing a variable name. Hover over the name to peek
-at its values from the dotenv files found for that source file.
+Yes. `.env`, `.env.example`, `.env.development`, `.env.staging`, `.env.production`,
+other `.env.*` files, `*.env`, and `.flaskenv` are supported.
+
+</details>
+
+<details>
+<summary>Can I autocomplete environment variables?</summary>
+
+Yes. Start typing `process.env.` or your language's environment-variable expression.
+Suggestions come from your dotenv files, with values masked and source filenames shown.
+
+</details>
+
+<details>
+<summary>Can I reveal a value inside an autocomplete popup?</summary>
+
+Yes. Open a suggestion's details and click **Reveal value**. Click **Hide value**
+to mask it again. Only that source's value is revealed; the suggestion row stays
+masked, and your secret-peeking setting stays unchanged.
+
+</details>
+
+<details>
+<summary>Can I peek at secrets without opening my .env file?</summary>
+
+Yes. Hover over a reference such as `process.env.SECRET_KEY` or `ENV["SECRET_KEY"]`.
+The popup shows the source file and lets you **Reveal value** or **Hide value**.
+New hovers follow your `dotenv.enableSecretpeeking` setting.
+
+</details>
+
+<details>
+<summary>Can I peek at encrypted values with dotenvx?</summary>
+
+Yes. In the Dotenv Editor, hover over an `encrypted:` value and click **Decrypt
+value**. The file stays encrypted. Click **Hide value**, leave the popup, or switch
+tabs to clear the displayed plaintext.
+
+You'll need a saved file, a trusted workspace, and the dotenvx CLI installed
+locally. dotenvx finds the matching private key through its usual lookup, such as
+`.env.keys` or its key store. A key stored only in GitHub Actions isn't available
+locally. If dotenvx isn't on your PATH, set `dotenv.dotenvxPath` to its executable.
+
+</details>
+
+<details>
+<summary>Does it highlight .env syntax?</summary>
+
+Yes. Variable names, values, comments, and quoted strings have syntax highlighting.
+The Dotenv Editor also highlights numeric values.
+
+</details>
+
+<details>
+<summary>Does it support languages other than JavaScript?</summary>
+
+Yes. Auto-completion and secret peeking support JavaScript, TypeScript, Ruby,
+Python, PHP, Go, Java, .NET (C#, F#, Visual Basic), C/C++, Julia, Erlang, Perl,
+Swift, Clojure, Rust, Dart, Kotlin, and Elixir.
+
+Values come from your dotenv files, rather than the running application's environment.
+
+</details>
+
+<details>
+<summary>Does it support importing env from node:process?</summary>
+
+Yes. Both `node:process` and `process` imports work, including named aliases and
+multiline imports.
+
+```js
+import { env } from 'node:process'
+console.log(env.SECRET_KEY)
+
+import { env as environment } from 'node:process'
+console.log(environment.SECRET_KEY)
+```
+
+</details>
+
+<details>
+<summary>Does it support .NET?</summary>
+
+Yes. C#, F#, and Visual Basic support `Environment.GetEnvironmentVariable`,
+including `System.Environment` and the overload with an `EnvironmentVariableTarget`.
+Type `(` or `"` in the first argument, or request completion while typing a name.
+Hover over the name to peek at its value.
 
 ```csharp
 var secret = System.Environment.GetEnvironmentVariable("SECRET_KEY");
 ```
 
-This displays `.env` values, not the running application's environment or Windows
-registry values. It does not read `appsettings.json` or resolve `IConfiguration`.
+Values come from dotenv files. The extension doesn't read Windows registry values,
+`appsettings.json`, or `IConfiguration`.
 
-#### Other language examples
+</details>
 
-Complete environment variable names and hover over them to see values from the
-dotenv files found for the source file:
+<details>
+<summary>Does it support C and C++?</summary>
+
+Yes. Complete and hover over names in `getenv` calls. C++ also supports
+`std::getenv` and `::getenv`.
 
 ```c
 const char *secret = getenv("SECRET_KEY");
 ```
 
-C++ also supports `std::getenv("SECRET_KEY")` and `::getenv("SECRET_KEY")`.
+</details>
+
+<details>
+<summary>Does it support Julia and Erlang?</summary>
+
+Yes. Complete and hover over names in these expressions:
 
 ```julia
 secret = ENV["SECRET_KEY"]
@@ -130,7 +159,16 @@ Secret = os:getenv("SECRET_KEY").
 Secret = os:getenv("SECRET_KEY", "fallback").
 ```
 
-Erlang files must use the `erlang` language mode provided by an Erlang extension.
+Erlang files need the `erlang` language mode provided by an Erlang extension.
+Fallback arguments aren't evaluated when a key is missing from your dotenv files.
+
+</details>
+
+<details>
+<summary>Does it support Perl?</summary>
+
+Yes. Suggestions preserve bare keys, single quotes, or double quotes. Hover over
+a name to peek at its value.
 
 ```perl
 my $secret = $ENV{SECRET_KEY};
@@ -138,7 +176,12 @@ my $secret = $ENV{'SECRET_KEY'};
 my $secret = $ENV{"SECRET_KEY"};
 ```
 
-Perl suggestions preserve bare keys, single quotes, or double quotes.
+</details>
+
+<details>
+<summary>Does it support Swift and Clojure?</summary>
+
+Yes. Complete names inside quotes and hover over them to peek at their values.
 
 ```swift
 let secret = ProcessInfo.processInfo.environment["SECRET_KEY"]
@@ -153,36 +196,31 @@ Swift also supports `Foundation.ProcessInfo.processInfo.environment`,
 (java.lang.System/getenv "SECRET_KEY")
 ```
 
-Suggestions work inside quotes and while typing a name. Hover respects the secret
-peeking setting. Values reflect `.env`, not the running process; Julia and Erlang defaults
-are not evaluated when a key is missing.
+</details>
+
+<details>
+<summary>Does it work with monorepos?</summary>
+
+Yes. Completion and secret peeking look in the source file's directory and each
+parent directory up to its workspace root. Sibling projects and other workspace
+folders stay separate. Your project doesn't need to install the `dotenv` package.
 
 </details>
 
 <details>
-<summary>Monorepos and file discovery</summary>
+<summary>Can I see values from multiple .env files?</summary>
 
-Completion and secret peeking look in the source file's directory and each parent
-directory up to its workspace root. This supports nested apps and monorepos without
-mixing in sibling projects or other workspace folders. Supported names include
-`.env`, `.env.*`, `*.env`, and `.flaskenv`. Custom filenames such as `.dev.vars` work
-when associated with the `dotenv` language through `files.associations`; open files
-with Dotenv selected as their language work too.
-
-Each key appears once in completion, with its source filenames. When files define
-different values for the same key, completion details and hover show each value
-with its filename, nearest directories first. The extension does not guess which
-environment your application runs. Unsaved dotenv edits appear immediately, and
-your project does not need to install the `dotenv` package.
+Yes. Each key appears once in completion, with its source filenames. Hover and
+completion details show the values with their filenames, nearest directories
+first. The extension doesn't guess which environment your application runs.
+Unsaved dotenv edits appear immediately in completion and secret peeking.
 
 </details>
 
 <details>
-<summary>Custom dotenv files</summary>
+<summary>Can I use custom dotenv filenames?</summary>
 
-Use VS Code's `files.associations` setting to enable syntax highlighting, cloaking,
-and the auto-cloaking toggle for custom filenames. For example, in your project's
-`.vscode/settings.json`:
+Yes. Associate them with the `dotenv` language in your project's `.vscode/settings.json`:
 
 ```json
 {
@@ -193,54 +231,77 @@ and the auto-cloaking toggle for custom filenames. For example, in your project'
 }
 ```
 
-In the native editor, cloaking follows the file’s language mode. Files associated
-with Dotenv are also included in completion and secret-peeking discovery.
+This enables syntax highlighting, cloaking, and the toggle in the native editor,
+and includes those files in completion and secret-peeking discovery. Open files
+with Dotenv selected as their language are included too.
 
 </details>
 
 <details>
-<summary>Editor behavior and cloaking</summary>
+<summary>Can I edit and copy values while they're cloaked?</summary>
 
-Autocomplete values start masked. Open a suggestion’s details and click **Reveal value**
-to reveal only that source’s value in the popup; click **Hide value** to mask it again.
-The suggestion row stays masked. This does not change the secret-peeking setting for hover.
-
-Dotenv files open in a Monaco source editor: the same editor component used by VS
-Code, with line numbers, multiple cursors, find/replace, folding, comments, and
-normal text editing. Values are masked before the editor becomes visible and the
-mask updates locally as you type. You can edit and copy while masked; copied text
-contains the actual value. Toggle auto-cloaking to reveal values. Each view starts
-masked and hides again when you switch tabs.
-
-Edits update the underlying document. Use the usual save, undo, and redo shortcuts.
-Font and basic editor settings follow VS Code. Custom theme token rules, arbitrary
-user keybindings, and other extensions do not automatically carry into embedded
-Monaco. The minimap and hover previews are disabled to avoid displaying values
-outside the masked source lines. If a concurrent edit conflicts, your draft remains
-in the view for copying instead of overwriting the other edit.
-
-Use **Reopen Editor With → Text Editor** to use the native VS Code editor. Its
-cloaking uses temporary decorations and can flash values during file opens or tab
-switches. In that native view, the toggle is remembered in extension storage and
-`dotenv.enableAutocloaking` controls cloaking.
-
-On upgrade, the extension removes only the exact invisible TextMate rules inserted
-by older versions from your global `editor.tokenColorCustomizations`. Other custom
-rules are preserved. Once those legacy rules are removed, cloaking no longer writes
-to your settings.
+Yes. Cloaking is visual: copied text contains the actual value. The Dotenv Editor
+supports line numbers, multiple cursors, find/replace, folding, comments, and
+normal editing. Save, undo, and redo use the usual shortcuts and update the
+underlying document. If another edit conflicts with yours, your draft stays
+available to copy instead of overwriting the other edit.
 
 </details>
 
 <details>
-<summary>YAML cloaking</summary>
+<summary>Does the Dotenv Editor prevent secrets from flashing when I switch tabs?</summary>
 
-YAML uses the normal editor and masks values under `env_variables`, `environment`,
-and `env`, including Docker maps and lists and Kubernetes `name`/`value` entries.
-Quotes and comments stay visible. Values can briefly flash before masking on file
-opens or tab switches; invalid YAML is parsed on a best-effort basis.
+Yes. Values are masked before the editor becomes visible, and masking updates
+locally as you type. Each view starts masked and hides values again on tab switches.
+The minimap and general hover previews are disabled; encrypted values have their
+own explicit **Decrypt value** action.
 
-Customize section names with `dotenv.yamlSections` (replaces the defaults), or set
-it to `[]` to disable YAML cloaking. YAML is not a source for completion or peeking.
+</details>
+
+<details>
+<summary>Does the Dotenv Editor follow my editor settings?</summary>
+
+Yes. Fonts and basic editor settings follow VS Code. It uses Monaco, the editor
+component behind VS Code. Custom theme token rules, arbitrary user keybindings,
+and other extensions don't automatically carry into the embedded editor.
+
+</details>
+
+<details>
+<summary>Can I use the native VS Code text editor?</summary>
+
+Yes. Choose **Reopen Editor With → Text Editor**. Cloaking there uses temporary
+decorations, so values can briefly flash during file opens or tab switches.
+The toggle is remembered in extension storage, and `dotenv.enableAutocloaking`
+controls cloaking in that view.
+
+</details>
+
+<details>
+<summary>Does it preserve my syntax-color settings?</summary>
+
+Yes. Cloaking no longer writes syntax-color settings. On upgrade, the extension
+removes only the exact invisible TextMate rules inserted by older versions from
+`editor.tokenColorCustomizations`. Your other custom rules stay intact.
+
+</details>
+
+<details>
+<summary>Can I cloak environment values in YAML?</summary>
+
+Yes. In the normal YAML editor, values under `env_variables`, `environment`, and
+`env` are masked. This includes Docker Compose maps and lists and Kubernetes
+`name`/`value` entries. Quotes and comments stay visible.
+
+Values can briefly flash on file opens or tab switches. Invalid YAML is handled
+on a best-effort basis. YAML isn't a source for completion or secret peeking.
+
+</details>
+
+<details>
+<summary>Can I customize which YAML sections are cloaked?</summary>
+
+Yes. Set `dotenv.yamlSections` to replace the defaults, or use `[]` to disable YAML cloaking.
 
 ```json
 {
@@ -250,11 +311,12 @@ it to `[]` to disable YAML cloaking. YAML is not a source for completion or peek
 
 </details>
 
-&nbsp;
+<details>
+<summary>Can I see what's changed?</summary>
 
-## CHANGELOG
+Yes. See the [CHANGELOG](CHANGELOG.md).
 
-See [CHANGELOG](CHANGELOG.md)
+</details>
 
 &nbsp;
 
