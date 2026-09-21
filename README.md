@@ -4,20 +4,26 @@
 * auto-completion
 * secret peeking
 * syntax highlighting 
-* decryption peeking (if using dotenvx)
+* NEW: decryption peeking (for encrypted .env files)
 
 <a href="https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode"><img src="https://img.shields.io/badge/VS%20Marketplace-Install-blue" alt="Install from VS Marketplace"></a>
 
 &nbsp;
 
 > auto-cloaking
-<img src="https://github.com/user-attachments/assets/3fe5b6a1-2a47-47a8-b1e0-4016606c442e">
+<img src="https://github.com/user-attachments/assets/548cfc4c-61e5-4398-be4b-19fcce9f64c7">
 
 > auto-completion
-<img src="https://github.com/user-attachments/assets/815e0a73-ac18-43bd-9076-518d822fdf7a"/>
+<img src="https://github.com/user-attachments/assets/13af2013-486d-4951-bcd1-d533e6c7231d"/>
 
 > secret peeking
-<img src="https://github.com/user-attachments/assets/4015239d-7455-4a11-a9f9-a5fc9295853f"/>
+<img src="https://github.com/user-attachments/assets/d0211521-594c-46ca-839c-89291a42e244"/>
+
+> syntax highlighting
+<img src="https://github.com/user-attachments/assets/0358e6d9-a3d1-4524-8225-45046cd6fb83"/>
+
+> decryption peeking
+<img src="https://github.com/user-attachments/assets/3bc33a20-fc49-4050-98a1-7c0bc3174a5c"/>
 
 &nbsp;
 
