@@ -3,7 +3,7 @@
   "displayName": "Dotenv Official",
   "description": "official dotenv extension for vscode—from the creator of dotenv.",
   "author": "Mot @motdotla",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "license": "MIT",
   "icon": "dotenv.png",
   "galleryBanner": {
