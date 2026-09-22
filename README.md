@@ -2,7 +2,7 @@
 
 <img src="https://dotenvx.com/logo-original.png" alt="dotenv" align="right" width="200" />
 
-*official dotenv extension for vscode*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
+*Official Dotenv Extension* – from the creator of [`dotenv`](https://github.com/motdotla/dotenv).
 
 * auto-cloaking
 * auto-completion

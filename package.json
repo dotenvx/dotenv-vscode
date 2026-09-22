@@ -1,7 +1,7 @@
 {
   "name": "dotenv-vscode",
   "displayName": "Dotenv Official",
-  "description": "official dotenv extension for vscode—from the creator of dotenv.",
+  "description": "Official Dotenv Extension – from the creator of dotenv.",
   "author": "Mot @motdotla",
   "version": "1.5.3",
   "license": "MIT",
