@@ -2,11 +2,17 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.2...master)
+## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.6...master)
 
-### Fixed
+## [1.5.6](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.4...v1.5.6) (2026-09-23)
 
-* Honor cloak color and icon settings in the Dotenv Editor, and folder-specific cloaking and secret-peeking settings in multi-root workspaces.
+### Changed
+
+* Use the shared auto-cloaking setting for YAML, removing the separate YAML section setting.
+
+## [1.5.5](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.2...v1.5.5) (2026-09-23)
+
+### Changed
 
 * Honor the auto-cloaking setting in the Dotenv Editor, including on load, settings changes, and tab switches (#139).
 
