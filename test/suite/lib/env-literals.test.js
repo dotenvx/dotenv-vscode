@@ -31,7 +31,8 @@ for (const [language, provider, calls, unrelated] of [
       it(`hovers the correct ${api} call and key`, () => {
         const text = `HELLO + ${expression(api, '"UNKNOWN"')} + ${expression(api, '"HELLO"')}`
         const result = provider.hover.provideHover(document(text), new vscode.Position(0, text.lastIndexOf('HELLO')))
-        assert(result.contents[0].value.includes('World'))
+        assert(result.contents[0].value.includes('█████'))
+        assert(!result.contents[0].value.includes('World'))
         assert.strictEqual(result.range.start.character, text.lastIndexOf('HELLO'))
         assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, 1)), undefined)
       })
@@ -47,7 +48,7 @@ for (const [language, provider, calls, unrelated] of [
       try {
         settings.secretpeekingEnabled = () => false
         helpers.envValues = () => new Map(Object.entries({ lower_key: 'World', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
-        for (const [key, value] of [['lower_key', 'World'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
+        for (const [key, value] of [['lower_key', '█████'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
           const text = expression(calls[0], `"${key}"`)
           settings.secretpeekingEnabled = () => false
           assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))), undefined)
@@ -76,7 +77,7 @@ describe('registered environment literal providers', () => {
       await vscode.languages.setTextDocumentLanguage(doc, language)
       const position = new vscode.Position(0, expression.indexOf('HELLO') + 2)
       const hover = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, position)
-      assert(hover.some(item => item.contents.some(content => (content.value || content).includes('World'))))
+      assert(hover.some(item => item.contents.some(content => (content.value || content).includes('█████'))))
       const completions = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', uri, position)
       assert(completions.items.some(item => (item.label.label || item.label) === 'HELLO'))
     })
@@ -93,7 +94,7 @@ describe('Erlang default argument', () => {
 
   it('hovers the key without treating the default as a key', () => {
     const text = 'os:getenv("HELLO", "HELLO")'
-    assert(providers.erlang.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('World'))
+    assert(providers.erlang.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('█████'))
     assert.strictEqual(providers.erlang.hover.provideHover(document(text), new vscode.Position(0, text.lastIndexOf('HELLO'))), undefined)
   })
 })
@@ -117,7 +118,8 @@ describe('Perl literal forms', () => {
   for (const text of ["$ENV{'HELLO'}", '$ENV{HELLO}', '$ENV{ HELLO }']) {
     it(`hovers ${text}`, () => {
       const result = providers.perl.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO')))
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
       assert.strictEqual(result.range.start.character, text.indexOf('HELLO'))
     })
   }

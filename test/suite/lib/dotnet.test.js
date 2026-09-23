@@ -51,7 +51,8 @@ describe('.NET hover', () => {
   ]) {
     it(`shows the .env value: ${text}`, () => {
       const result = dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO') + 1))
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
       assert.strictEqual(result.range.start.character, text.indexOf('HELLO'))
     })
   }
@@ -59,7 +60,8 @@ describe('.NET hover', () => {
   it('selects the hovered call when several calls or repeated names share a line', () => {
     const text = 'var HELLO = Environment.GetEnvironmentVariable("UNKNOWN") + Environment.GetEnvironmentVariable("HELLO");'
     const result = dotnet.hover.provideHover(document(text), new vscode.Position(0, text.lastIndexOf('HELLO') + 1))
-    assert(result.contents[0].value.includes('World'))
+    assert(result.contents[0].value.includes('█████'))
+    assert(!result.contents[0].value.includes('World'))
     assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, 5)), undefined)
   })
 
@@ -74,7 +76,7 @@ describe('.NET hover', () => {
     try {
       helpers.envValues = () => new Map(Object.entries({ lower_key: 'x', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
       settings.secretpeekingEnabled = () => false
-      for (const [key, expected] of [['lower_key', 'x'], ['EMPTY', '(empty)']]) {
+      for (const [key, expected] of [['lower_key', '█'], ['EMPTY', '(empty)']]) {
         const text = `Environment.GetEnvironmentVariable("${key}")`
         settings.secretpeekingEnabled = () => false
         assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))), undefined)
@@ -83,7 +85,7 @@ describe('.NET hover', () => {
       }
       const text = 'Environment.GetEnvironmentVariable("HELLO")'
       helpers.envValues = () => new Map(Object.entries({ HELLO: 'World' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
-      assert(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('World'))
+      assert(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('█████'))
       helpers.envValues = () => new Map()
       assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0], settings.missingText())
     } finally {
@@ -104,7 +106,7 @@ describe('.NET registered providers', () => {
       const doc = await vscode.workspace.openTextDocument(uri)
       await vscode.languages.setTextDocumentLanguage(doc, language)
       const hover = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(0, text.indexOf('HELLO') + 1))
-      assert(hover.some(item => item.contents.some(content => (content.value || content).includes('World'))))
+      assert(hover.some(item => item.contents.some(content => (content.value || content).includes('█████'))))
       const offset = text.split('\n')[1].indexOf('HE') + 2
       const completions = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', uri, new vscode.Position(1, offset))
       assert(completions.items.some(item => (item.label.label || item.label) === 'HELLO'))

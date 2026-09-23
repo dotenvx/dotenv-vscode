@@ -92,6 +92,34 @@ SINGLE='secret'
     }
   })
 
+  it('removes native cloaking controls and ignores toggles while the feature is disabled', async function () {
+    this.timeout(15000)
+    const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, '.dev.vars')
+    const document = await vscode.workspace.openTextDocument(uri)
+    await vscode.window.showTextDocument(document)
+    const config = vscode.workspace.getConfiguration('dotenv', uri)
+    const original = config.inspect('enableAutocloaking').workspaceValue
+    const settings = require('../../lib/settings')
+    let applied
+    const editor = { document, setDecorations: (_, ranges) => { applied = ranges } }
+    try {
+      for (const enabled of [true, false, true]) {
+        await config.update('enableAutocloaking', enabled, vscode.ConfigurationTarget.Workspace)
+        const lenses = await vscode.commands.executeCommand('vscode.executeCodeLensProvider', uri)
+        assert.strictEqual(lenses.some(lens => lens.command.command === 'dotenv.toggleAutocloaking'), enabled)
+        if (!enabled) {
+          await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
+          assert.strictEqual(settings.autocloakingEnabled(uri), false)
+        }
+        decorations.decorate({}, editor)
+        assert.strictEqual(applied.length, enabled ? 1 : 0)
+      }
+    } finally {
+      await settings.resetAutocloaking()
+      await config.update('enableAutocloaking', original, vscode.ConfigurationTarget.Workspace)
+    }
+  })
+
   it('clears the cloak and removes the toggle when switching language modes', async function () {
     const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, '.dev.vars')
     let document = await vscode.workspace.openTextDocument(uri)

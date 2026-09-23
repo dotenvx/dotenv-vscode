@@ -55,7 +55,8 @@ from the Command Palette to reveal or hide them.
 
 Switching tabs hides them again in the Dotenv Editor when auto-cloaking is enabled.
 Set `dotenv.enableAutocloaking` to `false` to keep values visible, including after
-reopening files or switching tabs. Changes to this setting apply to open editors immediately.
+reopening files or switching tabs. This disables the cloaking feature and removes
+its toggle controls. Changes apply to open editors immediately.
 
 &nbsp;
 
@@ -96,7 +97,9 @@ secret-peeking setting stays unchanged.
 
 Hover over a reference such as `process.env.SECRET_KEY` or `ENV["SECRET_KEY"]`.
 
-The popup shows the source file and lets you **Reveal value** or **Hide value**.
+Every new hover or expanded autocomplete peek starts cloaked. Click **Reveal value**
+to reveal that popup, or **Hide value** to cloak it again. Editor cloaking toggles
+never reveal peek values.
 Uncheck **Dotenv: Enable Secretpeeking** to disable dotenv hovers and in-code
 Reveal actions, including the expanded value details in autocomplete. Completion
 suggestions remain available with masked values.

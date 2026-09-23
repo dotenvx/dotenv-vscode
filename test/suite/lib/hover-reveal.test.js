@@ -5,7 +5,7 @@ const path = require('path')
 const vm = require('vm')
 const vscode = require('vscode')
 
-function fixture (defaultRevealed = true) {
+function fixture (featureEnabled = true) {
   const document = { uri: vscode.Uri.file('/test/hover.js'), version: 1 }
   const range = new vscode.Range(0, 12, 0, 17)
   const editor = { document, selection: new vscode.Selection(3, 0, 3, 0) }
@@ -32,7 +32,7 @@ function fixture (defaultRevealed = true) {
     })
     return module.exports
   }
-  const settings = { cloakIcon: () => '█', secretpeekingEnabled: () => defaultRevealed, missingText: () => 'MISSING' }
+  const settings = { cloakIcon: () => '█', secretpeekingEnabled: () => featureEnabled, missingText: () => 'MISSING' }
   const reveal = load('hover-reveal.js', { vscode: fakeVscode, './settings': settings })
   const helpers = load('helpers.js', {
     vscode: fakeVscode,
@@ -58,7 +58,7 @@ function fixture (defaultRevealed = true) {
 describe('hover popup reveal', () => {
   it('returns no hover when disabled and rejects previously issued reveal links', async () => {
     const f = fixture()
-    const masked = await f.click(f.token(f.hover()))
+    const masked = f.hover()
     const token = f.token(masked)
     f.settings.secretpeekingEnabled = () => false
     assert.strictEqual(f.hover(), undefined)
@@ -68,7 +68,7 @@ describe('hover popup reveal', () => {
   })
   it('shows and hides a masked value without changing settings or fresh hovers', async () => {
     const f = fixture()
-    const masked = await f.click(f.token(f.hover()))
+    const masked = f.hover()
     assert(masked.contents[0].value.startsWith('.env\n\n'))
     assert(!masked.contents[0].value.includes('SECRET'))
     assert(masked.contents[0].value.includes('██████'))
@@ -79,21 +79,23 @@ describe('hover popup reveal', () => {
     assert(shown.contents[0].value.includes('SECRET'))
     assert(shown.contents[1].value.includes('Hide value'))
     assert(f.editor.selection.active.isEqual(f.range.start))
+    assert(!f.hover().contents[0].value.includes('SECRET'), 'A fresh peek must recloak even after revealing another popup')
     const hidden = await f.click(f.token(shown))
     assert(hidden.contents[0].value.startsWith('.env\n\n'))
     assert(!hidden.contents[0].value.includes('SECRET'))
     assert(hidden.contents[0].value.includes('██████'))
     assert.strictEqual(f.settings.secretpeekingEnabled(), true)
-    assert(f.hover().contents[0].value.includes('SECRET'))
+    assert(!f.hover().contents[0].value.includes('SECRET'))
     assert.strictEqual(hidden.contents[1].isTrusted.enabledCommands[0], 'dotenv.toggleHoverValue')
     assert.strictEqual(hidden.contents[1].isTrusted.enabledCommands.length, 1)
   })
 
   it('can hide values when peeking is enabled', async () => {
     const f = fixture(true)
-    const hidden = await f.click(f.token(f.hover()))
+    const shown = await f.click(f.token(f.hover()))
+    const hidden = await f.click(f.token(shown))
     assert(hidden.contents[0].value.includes('██████'))
-    assert(f.hover().contents[0].value.includes('SECRET'))
+    assert(!f.hover().contents[0].value.includes('SECRET'))
     assert.strictEqual(f.settings.secretpeekingEnabled(), true)
   })
 
@@ -106,7 +108,7 @@ describe('hover popup reveal', () => {
     const content = f.hover().contents[0].value
     assert(content.includes('.env\n\n'))
     assert(content.includes('.env.local\n\n'))
-    assert(content.includes('SECRET'))
+    assert(!content.includes('SECRET'))
   })
 
   it('ignores unknown, reused, edited-document, and other-file links', async () => {
@@ -157,7 +159,7 @@ it('refreshes the real VS Code hover after clicking Reveal value and Hide value'
     })
     const token = hover => JSON.parse(decodeURIComponent(hover.contents[1].value.match(/\?([^)]*)/)[1]))[0]
     let current = helpers.valueHover('HELLO', document, range)
-    for (const expected of ['█████', 'World']) {
+    for (const expected of ['World', '█████']) {
       latest = undefined
       await vscode.commands.executeCommand('dotenv.toggleHoverValue', token(current))
       const deadline = Date.now() + 3000
@@ -179,30 +181,43 @@ it('refreshes the real VS Code hover after clicking Reveal value and Hide value'
 
 it('disables in-code hovers when the actual secret-peeking setting is unchecked', async function () {
   // Settings writes and cold language-provider startup can exceed Mocha's 2s default on CI.
-  this.timeout(15000)
+  this.timeout(30000)
   const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'peeking-setting.js')
   const config = vscode.workspace.getConfiguration('dotenv', uri)
   const original = config.inspect('enableSecretpeeking').workspaceValue
+  const originalCloaking = config.inspect('enableAutocloaking').workspaceValue
+  const settings = require('../../../lib/settings')
   try {
     await vscode.extensions.getExtension('dotenv.dotenv-vscode').activate()
     await vscode.workspace.fs.writeFile(uri, Buffer.from('process.env.HELLO\n'))
     await vscode.workspace.openTextDocument(uri)
-    for (const enabled of [true, false, true]) {
+    for (const [enabled, cloaking, revealEditor] of [[true, true, false], [true, true, true], [true, false, false], [false, true, false], [false, false, false], [true, true, false]]) {
+      await config.update('enableAutocloaking', cloaking, vscode.ConfigurationTarget.Workspace)
+      await settings.resetAutocloaking()
+      if (revealEditor) await settings.autocloakingOff(uri)
       await config.update('enableSecretpeeking', enabled, vscode.ConfigurationTarget.Workspace)
       const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(0, 14))
       const content = hovers.flatMap(hover => hover.contents).map(item => item.value || '').join('\n')
       assert.strictEqual(content.includes('.env'), enabled)
-      assert.strictEqual(content.includes('World'), enabled)
+      assert(!content.includes('World'))
+      assert.strictEqual(content.includes('█████'), enabled)
       const completions = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', uri, new vscode.Position(0, 12))
       const item = completions.items.find(item => item.label.label === 'HELLO')
       assert(item, 'Autocomplete must remain available')
       assert.strictEqual(!!item.documentation, enabled)
+      if (enabled) {
+        assert(item.documentation.value.includes('█████'))
+        assert(!item.documentation.value.includes('World'))
+        assert(content.includes('Reveal value'))
+      }
       if (!enabled) {
         assert(!content.includes('█████'))
         assert(!content.includes('Reveal value'))
       }
     }
   } finally {
+    await settings.resetAutocloaking()
+    await config.update('enableAutocloaking', originalCloaking, vscode.ConfigurationTarget.Workspace)
     await config.update('enableSecretpeeking', original, vscode.ConfigurationTarget.Workspace)
     await vscode.workspace.fs.delete(uri)
   }
