@@ -370,27 +370,14 @@ stay intact.
 <details><summary>Can I cloak environment values in YAML? <strong>Yes.</strong></summary><br>
 
 In the normal YAML editor, values under `env_variables`, `environment`, and
-`env` are masked.
+`env` are masked. The same **Dotenv: Enable Autocloaking** checkbox controls
+both `.env` and YAML files and is enabled by default.
 
 This includes Docker Compose maps and lists and Kubernetes `name`/`value` entries.
 Quotes and comments stay visible.
 
 Values can briefly flash on file opens or tab switches. Invalid YAML is handled
 on a best-effort basis. YAML isn't a source for completion or secret peeking.
-
-&nbsp;
-
-</details>
-
-<details><summary>Can I customize which YAML sections are cloaked? <strong>Yes.</strong></summary><br>
-
-Set `dotenv.yamlSections` to replace the defaults, or use `[]` to disable YAML cloaking.
-
-```json
-{
-  "dotenv.yamlSections": ["env_variables", "environment", "env", "secrets"]
-}
-```
 
 &nbsp;
 

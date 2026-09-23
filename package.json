@@ -37,7 +37,7 @@
           "scope": "resource",
           "type": "boolean",
           "default": true,
-          "description": "Enable auto-cloaking for your .env files"
+          "description": "Enable auto-cloaking for .env files and environment values in YAML"
         },
         "dotenv.enableSecretpeeking": {
           "scope": "resource",
@@ -56,19 +56,6 @@
           "type": "string",
           "default": "█",
           "description": "Change the icon of the cloak for your .env files"
-        },
-        "dotenv.yamlSections": {
-          "type": "array",
-          "scope": "resource",
-          "items": {
-            "type": "string"
-          },
-          "default": [
-            "env_variables",
-            "environment",
-            "env"
-          ],
-          "description": "YAML section names whose environment values are cloaked in the normal YAML editor. Use an empty array to disable YAML cloaking."
         }
       }
     },
