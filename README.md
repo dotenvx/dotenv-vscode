@@ -97,7 +97,9 @@ secret-peeking setting stays unchanged.
 Hover over a reference such as `process.env.SECRET_KEY` or `ENV["SECRET_KEY"]`.
 
 The popup shows the source file and lets you **Reveal value** or **Hide value**.
-New hovers follow your `dotenv.enableSecretpeeking` setting.
+Uncheck **Dotenv: Enable Secretpeeking** to disable dotenv hovers and in-code
+Reveal actions, including the expanded value details in autocomplete. Completion
+suggestions remain available with masked values.
 
 &nbsp;
 

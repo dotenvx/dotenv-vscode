@@ -68,19 +68,22 @@ describe('.NET hover', () => {
     assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('UNKNOWN'))).contents[0], settings.missingText())
   })
 
-  it('handles lowercase keys, empty values, and short masked values', () => {
+  it('handles lowercase keys, empty values, and disabled peeking', () => {
     const originalParse = helpers.envValues
     const originalPeeking = settings.secretpeekingEnabled
     try {
       helpers.envValues = () => new Map(Object.entries({ lower_key: 'x', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
       settings.secretpeekingEnabled = () => false
-      for (const [key, expected] of [['lower_key', '█'], ['EMPTY', '(empty)']]) {
+      for (const [key, expected] of [['lower_key', 'x'], ['EMPTY', '(empty)']]) {
         const text = `Environment.GetEnvironmentVariable("${key}")`
+        settings.secretpeekingEnabled = () => false
+        assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))), undefined)
+        settings.secretpeekingEnabled = () => true
         assert(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))).contents[0].value.includes(new vscode.MarkdownString().appendText(expected).value))
       }
       const text = 'Environment.GetEnvironmentVariable("HELLO")'
       helpers.envValues = () => new Map(Object.entries({ HELLO: 'World' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
-      assert(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('█████'))
+      assert(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0].value.includes('World'))
       helpers.envValues = () => new Map()
       assert.strictEqual(dotnet.hover.provideHover(document(text), new vscode.Position(0, text.indexOf('HELLO'))).contents[0], settings.missingText())
     } finally {

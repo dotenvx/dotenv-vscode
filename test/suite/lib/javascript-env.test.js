@@ -73,7 +73,7 @@ describe('named process env imports', () => {
       settings.secretpeekingEnabled = () => false
       const document = documentFor("import { env } from 'node:process'\nenv.HELLO")
       const hover = providers.javascriptHover.provideHover(document, new vscode.Position(1, 6))
-      assert(hover.contents[0].value.includes('█████'))
+      assert.strictEqual(hover, undefined)
     } finally {
       settings.secretpeekingEnabled = original
     }

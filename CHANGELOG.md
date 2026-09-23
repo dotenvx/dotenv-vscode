@@ -2,9 +2,15 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.6...master)
+## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.7...master)
 
-## [1.5.6](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.4...v1.5.6) (2026-09-23)
+## [1.5.7](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.6...v1.5.7) (2026-09-23)
+
+### Changed
+
+* Respect secret-peeking global setting when off.
+
+## [1.5.6](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.5...v1.5.6) (2026-09-23)
 
 ### Changed
 
@@ -176,6 +182,8 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 ## 0.24.1
 
 ### Fixed
+
+* Disable dotenv hovers and expanded autocomplete value details when secret peeking is turned off, while keeping autocomplete suggestions available.
 
 * Reverted code causing autocloaking to fail [#93](https://github.com/dotenvx/dotenv-vscode/pull/93)
 

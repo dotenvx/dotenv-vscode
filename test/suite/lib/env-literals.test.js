@@ -41,14 +41,17 @@ for (const [language, provider, calls, unrelated] of [
         assert.strictEqual(provider.completion.provideCompletionItems(document(text), new vscode.Position(0, text.length)), undefined)
       })
     }
-    it('handles masking, empty values, missing keys and missing files', () => {
+    it('handles disabled peeking, empty values, missing keys and missing files', () => {
       const originalParse = helpers.envValues
       const originalPeeking = settings.secretpeekingEnabled
       try {
         settings.secretpeekingEnabled = () => false
         helpers.envValues = () => new Map(Object.entries({ lower_key: 'World', EMPTY: '' }).map(([key, value]) => [key, [{ value, source: '.env' }]]))
-        for (const [key, value] of [['lower_key', '█████'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
+        for (const [key, value] of [['lower_key', 'World'], ['EMPTY', '(empty)'], ['UNKNOWN', settings.missingText()]]) {
           const text = expression(calls[0], `"${key}"`)
+          settings.secretpeekingEnabled = () => false
+          assert.strictEqual(provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))), undefined)
+          settings.secretpeekingEnabled = () => true
           const content = provider.hover.provideHover(document(text), new vscode.Position(0, text.indexOf(key))).contents[0]
           assert((typeof content === 'string' ? content : content.value).includes(typeof content === 'string' ? value : new vscode.MarkdownString().appendText(value).value))
         }
