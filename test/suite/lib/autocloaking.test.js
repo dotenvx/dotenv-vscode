@@ -133,6 +133,42 @@ describe('autocloaking lifecycle', () => {
 })
 
 describe('cloaking settings isolation', () => {
+  it('reads each folder’s settings and keeps toggles within that folder', async () => {
+    const configs = {
+      a: { 'dotenv.enableAutocloaking': true, 'dotenv.enableSecretpeeking': false, 'dotenv.cloakColor': '#ff0000', 'dotenv.cloakIcon': '*' },
+      b: { 'dotenv.enableAutocloaking': true, 'dotenv.enableSecretpeeking': true, 'dotenv.cloakColor': '#00ff00', 'dotenv.cloakIcon': '?' }
+    }
+    const uri = (folder, file) => ({ folder, toString: () => `file:///${folder}/${file}` })
+    const a = uri('a', '.env')
+    const b = uri('b', '.env')
+    const module = { exports: {} }
+    vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../../lib/settings.js'), 'utf8'), {
+      module,
+      require: () => ({
+        workspace: {
+          getConfiguration: (_, resource) => ({ get: key => configs[resource.folder][key] }),
+          getWorkspaceFolder: resource => ({ uri: { toString: () => resource.folder } })
+        }
+      })
+    })
+    const settings = module.exports
+    settings.initialize({ globalState: { get: () => undefined, update: async () => {} } })
+    for (const resource of [a, b]) {
+      assert.strictEqual(settings.autocloakingEnabled(resource), true)
+      assert.strictEqual(settings.secretpeekingEnabled(resource), configs[resource.folder]['dotenv.enableSecretpeeking'])
+      assert.strictEqual(settings.cloakColor(resource), configs[resource.folder]['dotenv.cloakColor'])
+      assert.strictEqual(settings.cloakIcon(resource), configs[resource.folder]['dotenv.cloakIcon'])
+    }
+    await settings.autocloakingOff(a)
+    assert.strictEqual(settings.autocloakingEnabled(uri('a', '.env.local')), false)
+    assert.strictEqual(settings.autocloakingEnabled(b), true)
+    await settings.autocloakingOff(b)
+    assert.strictEqual(settings.autocloakingEnabled(a), false)
+    await settings.autocloakingOn(b)
+    assert.strictEqual(settings.autocloakingEnabled(a), false)
+    configs.b['dotenv.enableAutocloaking'] = false
+    assert.strictEqual(settings.autocloakingEnabled(b), false)
+  })
   function loadSettings (globalValue, workspaceValue) {
     const writes = []
     const stored = new Map()

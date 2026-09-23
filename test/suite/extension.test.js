@@ -65,27 +65,28 @@ QUOTED="secret \${PLAIN}"
 SINGLE='secret'
 `
     })
+    await vscode.window.showTextDocument(document)
     const original = document.getText()
     const config = vscode.workspace.getConfiguration()
     const keys = ['editor.tokenColorCustomizations', 'dotenv.enableAutocloaking']
     const before = keys.map(key => config.inspect(key).globalValue)
     assert.deepStrictEqual(before, [undefined, undefined])
-    const initial = settings.autocloakingEnabled()
+    const initial = settings.autocloakingEnabled(document.uri)
     let applied
     const editor = { document, setDecorations: (type, ranges) => { applied = ranges } }
     try {
       await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
-      assert.strictEqual(settings.autocloakingEnabled(), !initial)
+      assert.strictEqual(settings.autocloakingEnabled(document.uri), !initial)
       decorations.decorate({}, editor)
       assert.strictEqual(applied.length, initial ? 0 : 3)
       await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
-      assert.strictEqual(settings.autocloakingEnabled(), initial)
+      assert.strictEqual(settings.autocloakingEnabled(document.uri), initial)
       decorations.decorate({}, editor)
       assert.strictEqual(applied.length, initial ? 3 : 0)
       assert.deepStrictEqual(keys.map(key => config.inspect(key).globalValue), before)
       assert.strictEqual(document.getText(), original)
     } finally {
-      if (settings.autocloakingEnabled() !== initial) {
+      if (settings.autocloakingEnabled(document.uri) !== initial) {
         await vscode.commands.executeCommand('dotenv.toggleAutocloaking')
       }
     }

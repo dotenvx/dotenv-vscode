@@ -48,12 +48,14 @@
 
 <details><summary>Does it automatically cloak my secrets? <strong>Yes.</strong></summary><br>
 
-Open a `.env` file and its values start masked.
+By default, open a `.env` file and its values start masked.
 
 Click **Toggle auto-cloaking** at the top of the file or run **Dotenv: Toggle auto-cloaking**
 from the Command Palette to reveal or hide them.
 
-Switching tabs hides them again in the Dotenv Editor.
+Switching tabs hides them again in the Dotenv Editor when auto-cloaking is enabled.
+Set `dotenv.enableAutocloaking` to `false` to keep values visible, including after
+reopening files or switching tabs. Changes to this setting apply to open editors immediately.
 
 &nbsp;
 
@@ -313,7 +315,7 @@ of overwriting the other edit.
 
 <details><summary>Does the Dotenv Editor prevent secrets from flashing when I switch tabs? <strong>Yes.</strong></summary><br>
 
-Values are masked before the editor becomes visible, and masking updates
+With auto-cloaking enabled, values are masked before the editor becomes visible, and masking updates
 locally as you type. Each view starts masked and hides values again on tab switches.
 
 The minimap and general hover previews are disabled; encrypted values have their
@@ -327,6 +329,10 @@ own explicit **Decrypt value** action.
 
 Fonts and basic editor settings follow VS Code. It uses Monaco, the editor
 component behind VS Code.
+
+`dotenv.cloakColor` and `dotenv.cloakIcon` customize the mask in both the Dotenv
+Editor and the native text editor. Changes apply immediately. Folder settings
+are respected in multi-root workspaces.
 
 Custom theme token rules, arbitrary user keybindings, and other extensions don't
 automatically carry into the embedded editor.
