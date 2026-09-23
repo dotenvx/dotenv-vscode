@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.7...master)
+## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.8...master)
+
+## [1.5.8](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.7...v1.5.8) (2026-09-23)
+
+### Changed
+
+* Get settings right - turning off the feature not the cloaking. ([#143](https://github.com/dotenvx/dotenv-vscode/pull/143))
 
 ## [1.5.7](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.6...v1.5.7) (2026-09-23)
 
