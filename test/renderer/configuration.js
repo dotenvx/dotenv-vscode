@@ -4,13 +4,16 @@ import { sourceEditor } from '../../media/editor/main.js'
 
 window.addEventListener('message', async event => {
   if (event.data?.type !== 'checkCloaking') return
-  const { masked, id } = event.data
+  const { masked, id, featureEnabled = masked, clickToggle = false } = event.data
   try {
+    if (clickToggle) document.getElementById('toggle').click()
     for (let i = 0; i < 100; i++) {
       if (sourceEditor && document.getElementById('toggle').getAttribute('aria-label') === (masked ? 'Reveal dotenv values' : 'Hide dotenv values')) break
       await new Promise(resolve => setTimeout(resolve, 25))
     }
     for (let i = 0; i < 3; i++) await new Promise(resolve => requestAnimationFrame(resolve))
+    const toggle = document.getElementById('toggle')
+    if (toggle.hidden === featureEnabled || toggle.disabled === featureEnabled) throw new Error('Toggle availability must follow feature enablement')
     const spans = [...document.querySelectorAll('.view-line span')].filter(span => !span.children.length && span.textContent.includes('SECRET_CONFIGURATION'))
     if (!spans.length) throw new Error('Secret text was not rendered')
     for (const span of spans) {

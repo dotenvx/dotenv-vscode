@@ -114,6 +114,8 @@ function applyMask () {
     })
     : [])
   status.textContent = conflict ? 'File changed elsewhere. Copy your edits before reopening.' : ''
+  toggle.hidden = !autocloaking
+  toggle.disabled = !autocloaking
   toggle.setAttribute('aria-label', masked ? 'Reveal dotenv values' : 'Hide dotenv values')
 }
 function conceal () {
@@ -128,7 +130,7 @@ function conceal () {
 }
 function toggleMask () {
   encryptedHover?.hide()
-  if (!editor) return
+  if (!editor || !autocloaking) return
   container.classList.add('preparing')
   masked = !masked
   applyMask()
@@ -210,7 +212,7 @@ function updateDocument (message) {
   previous = message.text
   applyMask()
   editor.render(true)
-  toggle.disabled = false
+  toggle.disabled = !autocloaking
   if (!document.hidden) container.classList.remove('preparing')
 }
 window.addEventListener('message', event => {

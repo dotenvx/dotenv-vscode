@@ -34,7 +34,8 @@ describe('named process env imports', () => {
       const reference = source.split('\n')[line + 1]
       const start = reference.indexOf('HELLO')
       const hover = providers.javascriptHover.provideHover(document, new vscode.Position(line + 1, start + 2))
-      assert(hover.contents[0].value.includes('World'))
+      assert(hover.contents[0].value.includes('█████'))
+      assert(!hover.contents[0].value.includes('World'))
       assert.strictEqual(hover.range.start.character, start)
       assert.strictEqual(hover.range.end.character, start + 5)
       const missing = providers.javascriptHover.provideHover(document, new vscode.Position(line + 1, reference.indexOf('MISSING') + 2))

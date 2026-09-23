@@ -47,8 +47,9 @@ describe('dotenv discovery through language providers', () => {
       assert(!item.documentation.value.includes('productionvalue'))
       const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(1, reference.indexOf('DISCOVERY_KEY') + 2))
       const content = hovers.flatMap(hover => hover.contents).map(value => value.value || value).join('\n')
-      assert(content.includes('localvalue'))
-      assert(content.includes('productionvalue'))
+      assert(content.includes('█'.repeat('localvalue'.length)))
+      assert(!content.includes('localvalue'))
+      assert(!content.includes('productionvalue'))
       assert(content.includes('.env.local'))
       assert(content.includes('.env.production'))
       assert.strictEqual(document.getText(), `${complete}\n${reference}`)
@@ -64,8 +65,9 @@ describe('dotenv discovery through language providers', () => {
       assert(!item.documentation.value.includes('localvalue'))
       const hovers = await vscode.commands.executeCommand('vscode.executeHoverProvider', uri, new vscode.Position(2, 8))
       const content = hovers.flatMap(hover => hover.contents).map(value => value.value || value).join('\n')
-      assert(content.includes('localvalue'))
-      assert(content.includes('productionvalue'))
+      assert(content.includes('█'.repeat('localvalue'.length)))
+      assert(!content.includes('localvalue'))
+      assert(!content.includes('productionvalue'))
     })
   }
 
@@ -102,7 +104,7 @@ describe('dotenv discovery through language providers', () => {
         assert.strictEqual(helpers.valueHover('MASK_TEST', document), undefined)
       }
       settings.secretpeekingEnabled = () => true
-      assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes('🌴secret'))
+      assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes('█'.repeat('🌴secret'.length)))
     } finally {
       settings.secretpeekingEnabled = originalPeeking
       settings.cloakIcon = originalIcon

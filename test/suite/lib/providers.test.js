@@ -440,7 +440,8 @@ describe('providers', function () {
 
       const result = providers.javascriptHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line for import.meta', async function () {
@@ -460,7 +461,8 @@ describe('providers', function () {
 
       const result = providers.javascriptHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -482,7 +484,8 @@ describe('providers', function () {
 
       const result = providers.rubyHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -504,7 +507,8 @@ describe('providers', function () {
 
       const result = providers.pythonHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line for os.getenv format', async function () {
@@ -524,7 +528,8 @@ describe('providers', function () {
 
       const result = providers.pythonHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line for os.environ[] format', async function () {
@@ -544,7 +549,8 @@ describe('providers', function () {
 
       const result = providers.pythonHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -566,7 +572,8 @@ describe('providers', function () {
 
       const result = providers.phpHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line for $_SERVER[] format', async function () {
@@ -586,7 +593,8 @@ describe('providers', function () {
 
       const result = providers.phpHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line for getenv() format', async function () {
@@ -606,7 +614,8 @@ describe('providers', function () {
 
       const result = providers.phpHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -628,7 +637,8 @@ describe('providers', function () {
 
       const result = providers.goHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -650,7 +660,8 @@ describe('providers', function () {
 
       const result = providers.javaHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -672,7 +683,8 @@ describe('providers', function () {
 
       const result = providers.csharpHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -694,7 +706,8 @@ describe('providers', function () {
 
       const result = providers.rustHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
 
     it('returns undefined at 0 line with var_os format', async function () {
@@ -714,7 +727,8 @@ describe('providers', function () {
 
       const result = providers.rustHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -736,7 +750,8 @@ describe('providers', function () {
 
       const result = providers.dartHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -758,7 +773,8 @@ describe('providers', function () {
 
       const result = providers.kotlinHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 
@@ -780,7 +796,8 @@ describe('providers', function () {
 
       const result = providers.elixirHover.provideHover(document, position)
 
-      assert(result.contents[0].value.includes('World'))
+      assert(result.contents[0].value.includes('█████'))
+      assert(!result.contents[0].value.includes('World'))
     })
   })
 })

@@ -183,6 +183,8 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ### Fixed
 
+* Always cloak new secret peeks, independently of editor cloaking. Disable cloaking controls when the auto-cloaking feature is turned off.
+
 * Disable dotenv hovers and expanded autocomplete value details when secret peeking is turned off, while keeping autocomplete suggestions available.
 
 * Reverted code causing autocloaking to fail [#93](https://github.com/dotenvx/dotenv-vscode/pull/93)

@@ -35,14 +35,17 @@ describe('Monaco renderer integration', () => {
         }
       })
       let sequence = 0
-      const check = masked => new Promise((resolve, reject) => {
+      const check = (masked, extra = {}) => new Promise((resolve, reject) => {
         const id = ++sequence
         checks.set(id, { resolve, reject })
-        panel.webview.postMessage({ type: 'checkCloaking', id, masked })
+        panel.webview.postMessage({ type: 'checkCloaking', id, masked, ...extra })
       })
       provider.resolveCustomTextEditor(document, panel, { extensionUri: vscode.Uri.file(root) })
       panel.webview.html = panel.webview.html.replace(/dist\/main.js/g, 'dist/test-renderer.js')
       await loaded
+      await check(false)
+      await check(false, { clickToggle: true })
+      await panel.webview.postMessage({ type: 'toggle' })
       await check(false)
       const edit = new vscode.WorkspaceEdit()
       edit.insert(uri, new vscode.Position(1, 0), 'NEXT=SECRET_CONFIGURATION_EDITED\n')
@@ -56,6 +59,8 @@ describe('Monaco renderer integration', () => {
       await config.update('enableAutocloaking', true, vscode.ConfigurationTarget.Workspace)
       const star = await check(true)
       assert(star.colors.includes('255,0,0'), 'Initial cloak color must be used')
+      await check(false, { featureEnabled: true, clickToggle: true })
+      await check(true, { clickToggle: true })
       await config.update('cloakIcon', '?', vscode.ConfigurationTarget.Workspace)
       const question = await check(true)
       assert.notStrictEqual(question.tile, star.tile, 'Changing the icon must change the rendered mask')

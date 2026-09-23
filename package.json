@@ -37,13 +37,13 @@
           "scope": "resource",
           "type": "boolean",
           "default": true,
-          "description": "Enable auto-cloaking for .env files and environment values in YAML"
+          "description": "Enable cloaking and its toggle controls for .env files and environment values in YAML"
         },
         "dotenv.enableSecretpeeking": {
           "scope": "resource",
           "type": "boolean",
           "default": true,
-          "description": "Enable in-code secret peeking for your environment variables"
+          "description": "Enable in-code secret peeking. Values start cloaked until you click Reveal value."
         },
         "dotenv.cloakColor": {
           "scope": "resource",

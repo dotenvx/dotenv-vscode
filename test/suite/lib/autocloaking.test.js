@@ -16,6 +16,7 @@ function setup () {
   const editor = uri => ({ document: { uri: { toString: () => uri } } })
   const editors = [editor('file:///project/.env'), editor('file:///project/.env')]
   const settings = {
+    autocloakingFeatureEnabled: () => true,
     autocloakingEnabled: () => enabled,
     initialize: () => {},
     removeLegacyMask: async () => {},
@@ -219,7 +220,7 @@ describe('cloaking settings isolation', () => {
     configure(false)
     assert.strictEqual(settings.autocloakingEnabled(), false)
     await settings.autocloakingOn()
-    assert.strictEqual(settings.autocloakingEnabled(), true)
+    assert.strictEqual(settings.autocloakingEnabled(), false)
     await settings.resetAutocloaking()
     assert.strictEqual(settings.autocloakingEnabled(), false)
   })
