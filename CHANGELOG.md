@@ -4,6 +4,12 @@ All notable changes to the Official Dotenv VS Code extension will be documented 
 
 ## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.2...master)
 
+### Fixed
+
+* Honor cloak color and icon settings in the Dotenv Editor, and folder-specific cloaking and secret-peeking settings in multi-root workspaces.
+
+* Honor the auto-cloaking setting in the Dotenv Editor, including on load, settings changes, and tab switches (#139).
+
 ## [1.5.2](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.1...v1.5.2) (2026-09-20)
 
 ### Changed

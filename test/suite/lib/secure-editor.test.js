@@ -3,7 +3,8 @@ const assert = require('assert')
 const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
-function fixture (initial = 'KEY=SECRET\r\n') {
+function fixture (initial = 'KEY=SECRET\r\n', enabled = true) {
+  const configurationChanges = []
   let text = initial
   const changes = []
   const undo = []
@@ -18,8 +19,8 @@ function fixture (initial = 'KEY=SECRET\r\n') {
     Range: class { constructor (start, end) { this.start = start; this.end = end } },
     WorkspaceEdit: class { replace (uri, range, value) { this.range = range; this.value = value } },
     workspace: {
-      getConfiguration: () => ({ get: () => undefined }),
-      onDidChangeConfiguration: () => ({ dispose () {} }),
+      getConfiguration: (section, uri) => ({ get: key => section === 'dotenv' && uri === document.uri && key === 'enableAutocloaking' ? enabled : undefined }),
+      onDidChangeConfiguration: fn => subscribe(configurationChanges, fn),
       onDidChangeTextDocument: fn => subscribe(changes, fn),
       applyEdit: async edit => { undo.push(text); redo.length = 0; changed(text.slice(0, edit.range.start.offset) + edit.value + text.slice(edit.range.end.offset)); return true }
     },
@@ -38,9 +39,20 @@ function fixture (initial = 'KEY=SECRET\r\n') {
     onDidDispose: () => ({ dispose () {} })
   }
   module.exports.resolveCustomTextEditor(document, panel, { extensionUri: '/extension' })
-  return { document, messages, changed, saves: () => saves, send: (type, extra = {}) => receive({ client: 'test', type, ...extra }) }
+  return { configure: value => { enabled = value; configurationChanges.forEach(fn => fn({ affectsConfiguration: (key, uri) => key === 'dotenv.enableAutocloaking' && uri === document.uri })) }, document, messages, changed, saves: () => saves, send: (type, extra = {}) => receive({ client: 'test', type, ...extra }) }
 }
 describe('Monaco document synchronization', () => {
+  it('sends resource-scoped cloaking settings on load and changes without resending text', async () => {
+    const f = fixture(undefined, false)
+    await f.send('ready')
+    assert.strictEqual(f.messages.at(-1).autocloaking, false)
+    for (const enabled of [true, false]) {
+      f.configure(enabled)
+      assert.strictEqual(f.messages.at(-1).type, 'configuration')
+      assert.strictEqual(f.messages.at(-1).autocloaking, enabled)
+      assert.strictEqual(f.messages.at(-1).text, undefined)
+    }
+  })
   it('decrypts only the requested current encrypted entry without changing the document', async () => {
     const f = fixture('KEY="encrypted:test"\r\n')
     await f.send('ready')
