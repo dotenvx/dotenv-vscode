@@ -69,27 +69,23 @@ describe('dotenv discovery through language providers', () => {
     })
   }
 
-  it('masks every conflicting value when secret peeking is disabled', async () => {
+  it('keeps suggestions without value details when secret peeking is disabled', async () => {
     const original = settings.secretpeekingEnabled
     try {
       settings.secretpeekingEnabled = () => false
       const uri = await write('app/src/masked.js', 'process.env.')
       const document = await vscode.workspace.openTextDocument(uri)
       const item = helpers.autocomplete('.', document, new vscode.Position(0, 12)).find(item => item.label.label === 'DISCOVERY_KEY')
-      const hover = helpers.valueHover('DISCOVERY_KEY', document).contents[0]
-      for (const content of [item.documentation.value, hover.value]) {
-        assert(!content.includes('localvalue'))
-        assert(!content.includes('productionvalue'))
-        assert(!content.replace(/\[.*?\]\(command:[^)]*\)/g, '').includes('ue'), 'Must not reveal the last two characters')
-        assert(content.includes('█'))
-        assert(content.includes('.env.local'))
-      }
+      assert.strictEqual(helpers.valueHover('DISCOVERY_KEY', document), undefined)
+      assert.strictEqual(item.documentation, undefined)
+      assert(item.label.description.includes('.env.local'))
+      assert.strictEqual(item.insertText, '.DISCOVERY_KEY')
     } finally {
       settings.secretpeekingEnabled = original
     }
   })
 
-  it('fully masks short and long values in completion labels, documentation and hover', async () => {
+  it('keeps short and long values masked in suggestions without peeking details', async () => {
     const originalPeeking = settings.secretpeekingEnabled
     const originalIcon = settings.cloakIcon
     try {
@@ -102,9 +98,8 @@ describe('dotenv discovery through language providers', () => {
         const item = helpers.autocomplete('.', document, new vscode.Position(0, 12)).find(item => item.label.label === 'MASK_TEST')
         const mask = '█'.repeat(value.length)
         assert.strictEqual(item.label.detail, ` ${mask}`)
-        assert(item.documentation.value.includes(mask))
-        assert(!item.documentation.value.replace(/\[.*?\]\(command:[^)]*\)/g, '').includes(value.slice(-2)))
-        assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes(mask))
+        assert.strictEqual(item.documentation, undefined)
+        assert.strictEqual(helpers.valueHover('MASK_TEST', document), undefined)
       }
       settings.secretpeekingEnabled = () => true
       assert(helpers.valueHover('MASK_TEST', document).contents[0].value.includes('🌴secret'))

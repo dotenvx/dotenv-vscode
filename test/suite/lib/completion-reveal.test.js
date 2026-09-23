@@ -33,8 +33,8 @@ function fixture () {
     })
     return module.exports
   }
-  const reveal = load('completion-reveal.js', { vscode: fakeVscode })
   const settings = { cloakIcon: () => '█', secretpeekingEnabled: () => true }
+  const reveal = load('completion-reveal.js', { vscode: fakeVscode, './settings': settings })
   const helpers = load('helpers.js', {
     vscode: fakeVscode,
     './completion-reveal': reveal,
@@ -69,6 +69,18 @@ function fixture () {
 }
 
 describe('completion popup reveal', () => {
+  it('keeps autocomplete suggestions but removes expanded details when peeking is disabled', async () => {
+    const f = fixture()
+    const token = f.tokens(f.original[0])[0]
+    f.settings.secretpeekingEnabled = () => false
+    const items = f.helpers.autocomplete('.', f.editor.document, f.editor.selection.active)
+    assert(items.length > 0)
+    assert.strictEqual(items[0].label.label, 'HELLO')
+    assert.strictEqual(items[0].insertText, '.HELLO')
+    assert.strictEqual(items[0].documentation, undefined)
+    assert.strictEqual(await f.click(token), undefined)
+    assert.strictEqual(f.triggers, 0)
+  })
   it('reveals one source only, preserves insertion, and masks again on hide and fresh requests', async () => {
     const f = fixture()
     const original = f.original[0]
