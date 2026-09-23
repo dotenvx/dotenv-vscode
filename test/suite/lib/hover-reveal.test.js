@@ -178,6 +178,8 @@ it('refreshes the real VS Code hover after clicking Reveal value and Hide value'
 })
 
 it('disables in-code hovers when the actual secret-peeking setting is unchecked', async function () {
+  // Settings writes and cold language-provider startup can exceed Mocha's 2s default on CI.
+  this.timeout(15000)
   const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'peeking-setting.js')
   const config = vscode.workspace.getConfiguration('dotenv', uri)
   const original = config.inspect('enableSecretpeeking').workspaceValue
