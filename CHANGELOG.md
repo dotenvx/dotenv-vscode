@@ -2,7 +2,13 @@
 
 All notable changes to the Official Dotenv VS Code extension will be documented in this file.
 
-## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.8...master)
+## [Unreleased](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.9...master)
+
+## [1.5.9](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.8...v1.5.9) (2026-10-01)
+
+### Changed
+
+* Patching cutting text ([#145](https://github.com/dotenvx/dotenv-vscode/pull/145)) 
 
 ## [1.5.8](https://github.com/dotenvx/dotenv-vscode/compare/v1.5.7...v1.5.8) (2026-09-23)
 
