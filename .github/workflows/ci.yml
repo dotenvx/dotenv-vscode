@@ -93,7 +93,7 @@ jobs:
       - run: npm ci
       - run: npm run package
       - name: Install dotenvx
-        run: npm install --global @dotenvx/dotenvx@2.28.2
+        run: npm install --global @dotenvx/dotenvx@2.32.4
       - name: Publish to Visual Studio Marketplace
         if: matrix.registry == 'marketplace'
         env:
@@ -103,11 +103,7 @@ jobs:
             echo 'Add the DOTENV_PRIVATE_KEY_CI repository secret before publishing.' >&2
             exit 1
           fi
-          dotenvx run --strict --redact -f .env.ci -- bash -euo pipefail <<'PUBLISH'
-          if [ -z "${VSCE_PAT:-}" ]; then
-            echo 'Set VSCE_PAT in the encrypted .env.ci file before publishing.' >&2
-            exit 1
-          fi
+          dotenvx run -f .env.ci -- bash -euo pipefail <<'PUBLISH'
           version=$(node -p "require('./package.json').version")
           npx --no-install vsce publish --packagePath "dotenv-vscode-${version}.vsix"
           PUBLISH
@@ -120,11 +116,7 @@ jobs:
             echo 'Add the DOTENV_PRIVATE_KEY_CI repository secret before publishing.' >&2
             exit 1
           fi
-          dotenvx run --strict --redact -f .env.ci -- bash -euo pipefail <<'PUBLISH'
-          if [ -z "${OVSX_PAT:-}" ]; then
-            echo 'Set OVSX_PAT in the encrypted .env.ci file before publishing.' >&2
-            exit 1
-          fi
+          dotenvx run -f .env.ci -- bash -euo pipefail <<'PUBLISH'
           version=$(node -p "require('./package.json').version")
           npx --no-install ovsx publish "dotenv-vscode-${version}.vsix" --registryUrl https://open-vsx.org
           PUBLISH

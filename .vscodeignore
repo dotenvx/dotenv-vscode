@@ -17,3 +17,5 @@ media/editor/main.js
 media/editor/decrypt-hover.js
 media/editor/dist/test-renderer.js
 media/editor/dist/test-renderer.css
+
+Envfile

@@ -1,0 +1,7 @@
+# Envfile - safe to commit
+strict true
+
+file ".env.ci" do
+  env "VSCE_PAT"
+  env "OVSX_PAT"
+end

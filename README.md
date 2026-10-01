@@ -390,6 +390,26 @@ on a best-effort basis. YAML isn't a source for completion or secret peeking.
 
 &nbsp;
 
+## Publishing
+
+CI uses dotenvx `2.32.4` to load the encrypted publishing credentials from
+`.env.ci`. The repository's `Envfile` requires `VSCE_PAT` and `OVSX_PAT`, enforces
+encrypted storage, and redacts their values from command output. Its `strict true`
+setting stops publishing if validation fails.
+
+Set `DOTENV_PRIVATE_KEY_CI` in the repository's GitHub Actions secrets. To check
+credentials locally with the matching private key available:
+
+```sh
+npx @dotenvx/dotenvx@2.32.4 check -f .env.ci
+```
+
+Pushing a `v`-prefixed tag matching `package.json` publishes to both Visual Studio
+Marketplace and Open VSX after the CI checks pass. The encrypted `.env.ci` and
+`Envfile` stay in the repository and are excluded from the extension package.
+
+&nbsp;
+
 ## Related Tools
 
 * [Load environment variables from a .env file](https://github.com/motdotla/dotenv)
