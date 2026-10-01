@@ -169,6 +169,9 @@ function updateDocument (message) {
       theme: 'dotenv',
       automaticLayout: true,
       ...message.options,
+      // VS Code forwards webview cut commands via document.execCommand('cut'),
+      // which does not work with EditContext. Use Monaco's textarea input.
+      editContext: false,
       minimap: { enabled: false },
       stickyScroll: { enabled: false },
       quickSuggestions: false,

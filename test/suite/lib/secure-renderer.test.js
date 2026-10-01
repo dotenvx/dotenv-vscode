@@ -6,6 +6,54 @@ const esbuild = require('esbuild')
 const provider = require('../../../lib/secure-editor')
 const decryption = require('../../../lib/decrypt-value')
 describe('Monaco renderer integration', () => {
+  it('uses native text input and handles cut events for selections and whole lines', async function () {
+    this.timeout(30000)
+    const root = path.resolve(__dirname, '../../..')
+    esbuild.buildSync({ entryPoints: [path.join(root, 'test/renderer/clipboard.js')], bundle: true, outfile: path.join(root, 'media/editor/dist/test-clipboard.js'), format: 'iife', platform: 'browser', loader: { '.ttf': 'file' }, logLevel: 'silent' })
+    const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, '.env.clipboard')
+    const initial = 'FIRST=secret\nSECOND=value\nTHIRD=last\n'
+    await vscode.workspace.fs.writeFile(uri, Buffer.from(initial))
+    const document = await vscode.workspace.openTextDocument(uri)
+    const panel = vscode.window.createWebviewPanel('dotenv.clipboardTest', 'Dotenv clipboard test', vscode.ViewColumn.One, { enableScripts: true })
+    let onReady
+    const ready = new Promise(resolve => { onReady = resolve })
+    const checks = new Map()
+    const listener = panel.webview.onDidReceiveMessage(message => {
+      if (message.type === 'clipboardReady') onReady()
+      if (message.type === 'cutResult') {
+        const { resolve, reject } = checks.get(message.id)
+        checks.delete(message.id)
+        if (message.error) reject(new Error(message.error))
+        else resolve(message)
+      }
+    })
+    let id = 0
+    const cut = async (selection, after, clipboard, extra = {}) => {
+      const before = document.getText()
+      const result = new Promise((resolve, reject) => {
+        checks.set(++id, { resolve, reject })
+        panel.webview.postMessage({ type: 'testCut', id, before, selection, ...extra })
+      })
+      const response = await result
+      assert.strictEqual(response.text, after, 'Cut must update the Monaco model')
+      for (let i = 0; i < 100 && document.getText() !== after; i++) await new Promise(resolve => setTimeout(resolve, 25))
+      assert.strictEqual(document.getText(), after, 'Cut must update the backing document')
+      if (clipboard !== null) assert.strictEqual(response.clipboard, clipboard, 'Cut must copy the original text')
+    }
+    try {
+      provider.resolveCustomTextEditor(document, panel, { extensionUri: vscode.Uri.file(root) })
+      panel.webview.html = panel.webview.html.replace(/dist\/main.js/g, 'dist/test-clipboard.js')
+      await ready
+      await cut({ startLineNumber: 1, startColumn: 7, endLineNumber: 1, endColumn: 13 }, 'FIRST=\nSECOND=value\nTHIRD=last\n', 'secret')
+      await cut({ startLineNumber: 1, startColumn: 3, endLineNumber: 1, endColumn: 3 }, 'SECOND=value\nTHIRD=last\n', 'FIRST=\n')
+      await cut({ startLineNumber: 1, startColumn: 1, endLineNumber: 2, endColumn: 7 }, 'last\n', 'SECOND=value\nTHIRD=', { reveal: true })
+      await cut({ startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 5 }, 'last\n', null, { readOnly: true })
+      await document.save()
+    } finally {
+      listener.dispose()
+      panel.dispose()
+    }
+  })
   it('honors disabled cloaking on load, settings changes, edits, and tab switches', async function () {
     this.timeout(30000)
     const root = path.resolve(__dirname, '../../..')
